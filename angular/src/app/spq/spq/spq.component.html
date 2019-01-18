@@ -1,0 +1,280 @@
+<form [formGroup]="quizForm" (ngSubmit)="onQuizSubmit()">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Quiz</h2>
+            <button type="submit" class="btn btn-primary" [disabled]="!quizForm.dirty">Save <i class="far fa-save"></i></button>
+            
+            <ul class="nav nav-tabs" id="spqQuizTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="basic-info-tab" data-toggle="tab" href="#basic-info" role="tab" aria-controls="basic-info" aria-selected="true">Basic info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="questions-tab" data-toggle="tab" href="#questions" role="tab" aria-controls="questions" aria-selected="false">Questions</a>
+                </li>                
+            </ul>
+            <div class="tab-content" id="spqQuizTabContent">
+                <div class="tab-pane fade show active" id="basic-info" role="tabpanel" aria-labelledby="basic-info-tab">
+                    <div class="form-group">
+                      <label for="title">Title</label>
+                      <input type="text" class="form-control" id="title" 
+                             placeholder="Enter title" formControlName="title" 
+                             [ngClass]="{ 'is-invalid': quizSubmitted && f.title.errors }" required>
+                      <div *ngIf="quizSubmitted && f.title.errors" class="invalid-feedback">
+                          <div *ngIf="f.title.errors.required">Title is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="summary">Summary</label>
+                      <textarea class="form-control" id="summary" rows="3" formControlName="summary"></textarea>
+                    </div>        
+                </div>
+                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                    <div class="form-group">
+                      <label for="duration">Settings</label>
+                      <input type="text" class="form-control" id="duration" 
+                             placeholder="Enter duration" formControlName="duration" 
+                             [ngClass]="{ 'is-invalid': quizSubmitted && f.duration.errors }">
+                      <div *ngIf="quizSubmitted && f.duration.errors" class="invalid-feedback">
+                          <div *ngIf="f.duration.errors.pattern">Only numbers are allowed</div>
+                      </div>               
+                    </div>
+                    <div class="form-group">
+                      <label for="nextSubmissionAfter">Submissions timer</label>
+                      <input type="text" class="form-control" id="time" 
+                             placeholder="Enter submission time" formControlName="nextSubmissionAfter" 
+                             [ngClass]="{ 'is-invalid': quizSubmitted && f.nextSubmissionAfter.errors }">
+                      <div *ngIf="quizSubmitted && f.nextSubmissionAfter.errors" class="invalid-feedback">
+                          <div *ngIf="f.nextSubmissionAfter.errors.pattern">Only numbers are allowed</div>
+                      </div>               
+                    </div> 
+                    <div class="form-group">
+                      <label for="timeActive">Time active</label>
+                      <input type="text" class="form-control" id="timeActive" 
+                             placeholder="Enter time active" formControlName="timeActive" 
+                             [ngClass]="{ 'is-invalid': quizSubmitted && f.timeActive.errors }">
+                      <div *ngIf="quizSubmitted && f.timeActive.errors" class="invalid-feedback">
+                          <div *ngIf="f.timeActive.errors.pattern">Only numbers are allowed</div>
+                      </div>               
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" formControlName="paginated">
+                        <label class="form-check-label" for="paginated">Paginated?</label>
+                    </div>
+                    <div class="form-group">
+                      <label for="perPage">Per page</label>
+                      <input type="text" class="form-control" id="perPage" 
+                             formControlName="perPage" 
+                             [ngClass]="{ 'is-invalid': quizSubmitted && f.perPage.errors }">
+                      <div *ngIf="quizSubmitted && f.perPage.errors" class="invalid-feedback">
+                          <div *ngIf="f.perPage.errors.pattern">Only numbers are allowed</div>
+                      </div>               
+                    </div> 
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" formControlName="randomQuestions">
+                        <label class="form-check-label" for="randomQuestions">Random questions?</label>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" formControlName="randomAnswers">
+                        <label class="form-check-label" for="randomAnswers">Random answers?</label>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" formControlName="immediateAnswers">
+                        <label class="form-check-label" for="immediateAnswers">Immediate answers?</label>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" formControlName="restrictSubmissions">
+                        <label class="form-check-label" for="restrictSubmissions">Restrict submissions?</label>
+                    </div>
+                    <div class="form-group">
+                      <label for="allowedSubmissions">Allowed submissions</label>
+                      <input type="text" class="form-control" id="submissionsNo" 
+                             formControlName="allowedSubmissions" 
+                             [ngClass]="{ 'is-invalid': quizSubmitted && f.allowedSubmissions.errors }">
+                      <div *ngIf="quizSubmitted && f.allowedSubmissions.errors" class="invalid-feedback">
+                          <div *ngIf="f.allowedSubmissions.errors.pattern">Only numbers are allowed</div>
+                      </div>               
+                    </div>                      
+                </div>
+                <div class="tab-pane fade" id="questions" role="tabpanel" aria-labelledby="questions-tab">
+                    <div class="row">
+                        <div class="col-sm-6" formGroupName="question">
+                            <h3>New question</h3>
+                            <div class="form-group">
+                              <label for="questionTitle">Title</label>
+                              <input type="text" class="form-control" id="questionTitle" 
+                                     placeholder="Enter title" formControlName="title" 
+                                     [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.title').errors }" required>
+                              <div *ngIf="questionSubmitted && quizForm.get('question.title').errors" class="invalid-feedback">
+                                  <div *ngIf="quizForm.get('question.title').errors.required">Title is required</div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="questionDescription">Description</label>
+                              <textarea class="form-control" id="questionDescription" rows="3" formControlName="description"></textarea>
+                            </div>      
+                            <div class="form-group">
+                              <label for="questionType">Type</label>
+                              <select class="form-control" id="questionType" formControlName="type" 
+                                      [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.type').errors }">
+                                <option>radio</option>
+                                <option>multi</option>
+                                <option>sort</option>
+                                <option>range</option>
+                                <option>select</option>
+                              </select>
+                              <div *ngIf="questionSubmitted && quizForm.get('question.type').errors" class="invalid-feedback">
+                                  <div *ngIf="quizForm.get('question.type').errors.required">Type is required</div>
+                              </div>        
+                            </div>
+                            <div class="form-group">
+                              <label for="questionHint">Hint</label>
+                              <textarea class="form-control" id="questionHint" rows="3" formControlName="hint"></textarea>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" formControlName="isObligatory">
+                                <label class="form-check-label" for="isObligatory">Obligatory?</label>
+                            </div>                            
+                              <h3>Answers</h3>
+                            <button type="button" class="btn btn-primary" (click)="addAnswer()">Add answer</button>
+                            <div>
+                              <ul class="list-group" formArrayName="answers">
+                                  <li class="list-group-item" *ngFor="let answer of quizForm.get('question.answers')?.controls; let i = index;">
+                                      <i *ngIf="!answerListState[i] || answerListState[i]==0; else answerChevronUp" 
+                                         class="fas fa-chevron-down float-right m-1" 
+                                         data-toggle="collapse" 
+                                         [attr.data-target]="'#answerContent_' + i"
+                                         (click)="toogleAnswerChevron(i)">
+                                      </i>
+                                      <i class="fas fa-trash-alt float-right m-1" (click)="deleteAnswer($event, i)"></i>
+                                      <ng-template #answerChevronUp>
+                                        <i class="fas fa-chevron-up float-right m-1" 
+                                          data-toggle="collapse" 
+                                          [attr.data-target]="'#answerContent_' + i"
+                                          (click)="toogleAnswerChevron(i)">
+                                        </i>
+                                      </ng-template>
+                                      <div class="collapse" id="answerContent_{{i}}">
+                                          <div class="card card-body">                
+                                              <div [formGroupName]="i">
+                                                  <div class="form-group">
+                                                      <label for="answerTitle_{{i}}">Title</label>
+                                                      <input type="text" class="form-control" id="answerTitle_{{i}}" formControlName="title" 
+                                                             [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.title.errors }" required>
+                                                      <div *ngIf="questionSubmitted && answer?.controls.title.errors" class="invalid-feedback">
+                                                          <div *ngIf="answer?.controls.title.errors.required">Title is required</div>
+                                                      </div>            
+                                                  </div>
+                                                  <div class="form-group form-check">
+                                                      <input type="checkbox" class="form-check-input" id="answerCorrect_{{i}}" formControlName="isCorrect">
+                                                      <label class="form-check-label" for="answerCorrect_{{i}}">Correct answer</label>
+                                                  </div>     
+                                                  <div class="form-group">
+                                                      <label for="answerMessage_{{i}}">Message</label>
+                                                      <textarea class="form-control" id="answerMessage_{{i}}" rows="3" formControlName="message"></textarea>
+                                                  </div>
+                                                    <div class="form-group">
+                                                      <label for="answerPoints_{{i}}">Points</label>
+                                                      <input type="text" class="form-control" id="answerPoints_{{i}}" 
+                                                             placeholder="Enter points" formControlName="points" 
+                                                             [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.points.errors }">
+                                                      <div *ngIf="questionSubmitted && answer?.controls.points.errors" class="invalid-feedback">
+                                                          <div *ngIf="answer?.controls.points.errors.pattern">Only numbers are allowed</div>
+                                                      </div>               
+                                                    </div>                                                  
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </li>
+                              </ul>
+                            </div>
+                            <button type="button" class="btn btn-primary" (click)="addQuestion()">Add question</button>                            
+                        </div>
+                        <div class="col-sm-6">
+                            <h3>List of questions</h3>
+                            <ul
+                              cdkDropList
+                              #questionsList="cdkDropList"
+                              [cdkDropListData]="questions"
+                              [cdkDropListConnectedTo]="[tmpQuestionsList]"
+                              class="list-group"
+                              (cdkDropListDropped)="drop($event)">
+
+                              <li class="list-group-item" *ngIf="questions.length==0">
+                                <div class="example-custom-placeholder"></div>
+                              </li>
+
+                              <li class="list-group-item" *ngFor="let question of questions; let i = index" cdkDrag>
+                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                                <span class="badge badge-info">{{ i+1 }}</span> 
+                                {{ question.title }}
+                                <i class="fas fa-arrows-alt float-right m-1" cdkDragHandle></i> 
+                                <i class="fas fa-trash-alt float-right m-1" (click)="deleteQuestion($event, 'questions', i)"></i>
+                                <i class="far fa-clone float-right m-1" (click)="cloneQuestion($event, question)"></i>
+                                <i class="fas fa-cogs float-right m-1" (click)="edit($event, question)"></i>
+                                <i *ngIf="!listState[i] || listState[i]==0; else chevronUp" 
+                                   class="fas fa-chevron-down float-right m-1" 
+                                   data-toggle="collapse" 
+                                   [attr.data-target]="'#questionContent_' + i"
+                                   (click)="toogleQuestionChevron(i)">
+                                </i>
+                                <ng-template #chevronUp>
+                                  <i class="fas fa-chevron-up float-right m-1" 
+                                    data-toggle="collapse" 
+                                    [attr.data-target]="'#questionContent_' + i"
+                                    (click)="toogleQuestionChevron(i)">
+                                  </i>
+                                </ng-template>
+                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                                <div class="collapse" id="questionContent_{{i}}">
+                                  <div class="card card-body">
+                                      <p>Desc: {{ question.description }}</p>
+                                      <p>Hint: {{ question.hint }}</p>
+                                      <p>Type: {{ question.type }}</p>
+                                      <p>Obligatory: {{ question.isObligatory }}</p>
+                                      <p>Answers:</p>
+                                      <div *ngFor="let answer of question.answers">
+                                          <p>Title: {{ answer.title }}</p>
+                                          <p>Correct: {{ answer.isCorrect }}</p>
+                                          <p>Message: {{ answer.message }}</p>
+                                          <p>Points: {{ answer.points }}</p>
+                                      </div>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                            <h3>Temp questions</h3>
+                            <ul
+                              cdkDropList
+                              #tmpQuestionsList="cdkDropList"
+                              [cdkDropListData]="tmpQuestions"
+                              [cdkDropListConnectedTo]="[questionsList]"
+                              class="list-group"
+                              (cdkDropListDropped)="drop($event)">
+
+                              <li class="list-group-item" *ngIf="tmpQuestions.length==0">
+                                <div class="example-custom-placeholder"></div>
+                              </li>
+
+                              <li class="list-group-item" *ngFor="let question of tmpQuestions; let i = index" cdkDrag>
+                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                                <span class="badge badge-info">{{ i+1 }}</span> 
+                                {{ question.title }}
+                                <i class="fas fa-arrows-alt float-right m-1" cdkDragHandle></i>       
+                                <i class="fas fa-trash-alt float-right m-1" (click)="delete($event, 'tmpQuestions', i)"></i>
+                              </li>
+                            </ul>                            
+                        </div>
+                    </div>
+                </div>
+            </div>                     
+        </div>
+    </div>
+</form>
+
