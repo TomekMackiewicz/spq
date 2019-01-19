@@ -35,13 +35,16 @@ require_once('includes/db/install_questions_tables.php');
 require_once('includes/db/install_answers_tables.php');
 require_once('includes/db/install_marks_tables.php');
 require_once('includes/db/install_marks_types_tables.php');
+require_once('includes/db/drop_tables.php');
 
-register_activation_hook(__FILE__, 'install_quizes_tables');
-register_activation_hook(__FILE__, 'install_questions_tables');
-register_activation_hook(__FILE__, 'install_answers_tables');
-register_activation_hook(__FILE__, 'install_marks_tables');
-register_activation_hook(__FILE__, 'install_marks_types_tables');
+register_activation_hook('includes/db/install_quizes_tables.php', 'install_quizes_tables');
+register_activation_hook('includes/db/install_questions_tables.php', 'install_questions_tables');
+register_activation_hook('includes/db/install_answers_tables.php', 'install_answers_tables');
+register_activation_hook('includes/db/install_marks_tables.php', 'install_marks_tables');
+register_activation_hook('includes/db/install_marks_types_tables.php', 'install_marks_types_tables');
 register_activation_hook(__FILE__, 'add_db_version_option');
+
+register_uninstall_hook('includes/db/drop_tables.php', 'drop_tables');
 
 add_action('admin_menu', 'quiz_plugin_menu');
 add_action('admin_head', 'append_base_href');
