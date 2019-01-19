@@ -30,7 +30,18 @@ $db_version = '1.0';
 
 require_once('includes/rest/rest.php');
 
-register_activation_hook(__FILE__, 'install_quiz_tables');
+require_once('includes/db/install_quizes_tables.php');
+require_once('includes/db/install_questions_tables.php');
+require_once('includes/db/install_answers_tables.php');
+require_once('includes/db/install_marks_tables.php');
+require_once('includes/db/install_marks_types_tables.php');
+
+register_activation_hook(__FILE__, 'install_quizes_tables');
+register_activation_hook(__FILE__, 'install_questions_tables');
+register_activation_hook(__FILE__, 'install_answers_tables');
+register_activation_hook(__FILE__, 'install_marks_tables');
+register_activation_hook(__FILE__, 'install_marks_types_tables');
+register_activation_hook(__FILE__, 'add_db_version_option');
 
 add_action('admin_menu', 'quiz_plugin_menu');
 add_action('admin_head', 'append_base_href');
@@ -95,8 +106,8 @@ function quiz_plugin_options() {
     $mt_submit_hidden = filter_input(INPUT_POST, 'mt_submit_hidden');    
 
     if(isset($mt_submit_hidden) && $mt_submit_hidden == 'Y') {
-        $opt_val = filter_input(INPUT_POST, 'mt_favorite_color');
-        update_option('mt_favorite_color', $opt_val);
+        $opt_val = filter_input(INPUT_POST, 'spq_preserve_db_tables');
+        update_option('spq_preserve_db_tables', $opt_val);
         
         require_once('includes/settings_alert.php');
     }
@@ -122,52 +133,20 @@ function list_of_quizes()
     require_once('includes/quizes_list.php');
 }
 
-function install_quiz_tables()
-{
-    global $wpdb, $db_version;
-   
-    $table_name = $wpdb->prefix."quiz";   
-    $charset_collate = $wpdb->get_charset_collate();
-
-    if (get_option("db_version") != $db_version) {
-        $sql = "CREATE TABLE $table_name (
-          id mediumint(9) NOT NULL AUTO_INCREMENT,
-          created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-          name varchar(255) NOT NULL,
-          description text NOT NULL,
-          PRIMARY KEY (id)
-        ) $charset_collate;";
-        
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-        dbDelta($sql);
-
-        return;
-    } else {
-        $sql = "CREATE TABLE $table_name (
-          id mediumint(9) NOT NULL AUTO_INCREMENT,
-          created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-          name varchar(255) NOT NULL,
-          description text NOT NULL,
-          dupa boolean,
-          PRIMARY KEY (id)
-        ) $charset_collate;";
-
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-        dbDelta($sql);
-    }
-    
-    add_option('db_version', $db_version);    
-}
-
-// remove hook drop
+// remove hook drop if !get_option('spq_preserve_db_tables')
 
 function update_db_check() 
 {    
     global $db_version;
     
     if (get_option('db_version') != $db_version) {
-        install_quiz_tables();
+        install_quizes_tables();
     }
+}
+
+function add_db_version_option()
+{
+    global $db_version;
+    
+    add_option('db_version', $db_version);
 }
