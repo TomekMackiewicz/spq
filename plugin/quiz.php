@@ -4,8 +4,8 @@
 Plugin Name:  Quiz
 Plugin URI:   https://example.com/plugins/the-basics/
 Description:  Tompo Quiz Plugin
-Version:      20160911
-Author:       WordPress.org
+Version:      1.0
+Author:       Tompo
 Author URI:   https://author.example.com/
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
@@ -29,13 +29,12 @@ defined('ABSPATH') or die('No script kiddies please!');
 $db_version = '1.0';
 
 require_once('includes/rest/rest.php');
-require_once('includes/rest/enqueue_scripts.php');
 
 register_activation_hook(__FILE__, 'install_quiz_tables');
 
 add_action('admin_menu', 'quiz_plugin_menu');
 add_action('admin_head', 'append_base_href');
-//add_action('plugins_loaded', 'update_db_check');
+add_action('plugins_loaded', 'update_db_check');
 add_action('admin_enqueue_scripts', 'add_angular_scripts');
 
 add_action('rest_api_init', function() {
@@ -56,6 +55,30 @@ add_action('rest_api_init', function() {
     'callback' => 'patch_quiz',
   ));  
 });
+
+function add_angular_scripts($hook) {
+//    if ('edit.php' != $hook) {
+//        return;
+//    }
+
+    wp_register_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css');
+    wp_enqueue_style('bootstrap');
+    wp_register_style('font-awesome', 'https://use.fontawesome.com/releases/v5.6.1/css/all.css');
+    wp_enqueue_style('font-awesome');
+    
+    wp_enqueue_script('runtime', plugin_dir_url(__FILE__).'dist/runtime.js', array(), null, true);
+    wp_enqueue_script('polyfills', plugin_dir_url(__FILE__).'dist/polyfills.js', array(), null, true);
+    wp_enqueue_script('main', plugin_dir_url(__FILE__).'dist/main.js', array(), null, true);
+    
+    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.3.1.slim.min.js', array(), null, true);
+    wp_enqueue_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array(), null, true);
+    wp_enqueue_script('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', array(), null, true);
+}
+
+function append_base_href()
+{
+    echo '<base href="/wp/wp-admin/admin.php?">';
+}
 
 function quiz_plugin_menu() {
     add_menu_page( 'Quiz Plugin', 'Quiz Plugin', 'manage_options', 'quiz-plugin', 'quiz_plugin_options');
@@ -102,8 +125,6 @@ function list_of_quizes()
 function install_quiz_tables()
 {
     global $wpdb, $db_version;
-    
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
    
     $table_name = $wpdb->prefix."quiz";   
     $charset_collate = $wpdb->get_charset_collate();
@@ -116,28 +137,28 @@ function install_quiz_tables()
           description text NOT NULL,
           PRIMARY KEY (id)
         ) $charset_collate;";
+        
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
         dbDelta($sql);
 
-        update_option("db_version", $db_version);
-        
         return;
-    }    
-    
-    $sql = "CREATE TABLE $table_name (
-      id mediumint(9) NOT NULL AUTO_INCREMENT,
-      created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-      name varchar(255) NOT NULL,
-      description text NOT NULL,
-      dupa boolean,
-      PRIMARY KEY (id)
-    ) $charset_collate;";
+    } else {
+        $sql = "CREATE TABLE $table_name (
+          id mediumint(9) NOT NULL AUTO_INCREMENT,
+          created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+          name varchar(255) NOT NULL,
+          description text NOT NULL,
+          dupa boolean,
+          PRIMARY KEY (id)
+        ) $charset_collate;";
 
-    //require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+        dbDelta($sql);
+    }
     
-    dbDelta($sql);
-    
-    add_option('db_version', $db_version);   
+    add_option('db_version', $db_version);    
 }
 
 // remove hook drop
