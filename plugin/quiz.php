@@ -75,8 +75,10 @@ function add_angular_scripts($hook) {
 //        return;
 //    }
 
-    wp_register_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css');
-    wp_enqueue_style('bootstrap');
+    //wp_register_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css');
+    //wp_enqueue_style('bootstrap');
+    wp_register_style('spq-styles', plugin_dir_url(__FILE__).'dist/styles.css');
+    wp_enqueue_style('spq-styles');    
     wp_register_style('font-awesome', 'https://use.fontawesome.com/releases/v5.6.1/css/all.css');
     wp_enqueue_style('font-awesome');
     

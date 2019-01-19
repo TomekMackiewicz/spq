@@ -1,109 +1,102 @@
-<form [formGroup]="quizForm" (ngSubmit)="onQuizSubmit()">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Quiz</h2>
-            <button type="submit" class="btn btn-primary" [disabled]="!quizForm.dirty">Save <i class="far fa-save"></i></button>
-            
-            <ul class="nav nav-tabs" id="spqQuizTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="basic-info-tab" data-toggle="tab" href="#basic-info" role="tab" aria-controls="basic-info" aria-selected="true">Basic info</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="questions-tab" data-toggle="tab" href="#questions" role="tab" aria-controls="questions" aria-selected="false">Questions</a>
-                </li>                
-            </ul>
-            <div class="tab-content" id="spqQuizTabContent">
-                <div class="tab-pane fade show active" id="basic-info" role="tabpanel" aria-labelledby="basic-info-tab">
-                    <div class="form-group">
-                      <label for="title">Title</label>
-                      <input type="text" class="form-control" id="title" 
-                             placeholder="Enter title" formControlName="title" 
-                             [ngClass]="{ 'is-invalid': quizSubmitted && f.title.errors }" required>
-                      <div *ngIf="quizSubmitted && f.title.errors" class="invalid-feedback">
-                          <div *ngIf="f.title.errors.required">Title is required</div>
-                      </div>
+<div class="wrap">
+    <form [formGroup]="quizForm" (ngSubmit)="onQuizSubmit()">
+        <h1>New quiz</h1>
+        <button type="submit" class="button button-primary" [disabled]="!quizForm.dirty">Save <i class="far fa-save"></i></button>
+        <div id="spq-box-wrap">
+            <div class="spq-box-container-3">
+                <div class="spq-box">
+                    <h2>Basic info</h2>
+                    <div class="spq-inside">
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" autocomplete="off" placeholder="Title" 
+                                   formControlName="title" [ngClass]="{ 'is-invalid': quizSubmitted && f.title.errors }" required>
+                            <div *ngIf="quizSubmitted && f.title.errors" class="invalid-feedback">
+                                <div *ngIf="f.title.errors.required">Title is required</div>
+                            </div>
+                        </div>                     
+                        <div class="spq-input-wrap">
+                            <textarea class="spq-textarea" formControlName="description" placeholder="Description"></textarea>
+                        </div>                      
+                        <div class="spq-input-wrap">
+                            <textarea class="spq-textarea" formControlName="summary" placeholder="Summary"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                      <label for="description">Description</label>
-                      <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="summary">Summary</label>
-                      <textarea class="form-control" id="summary" rows="3" formControlName="summary"></textarea>
-                    </div>        
                 </div>
-                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                    <div class="form-group">
-                      <label for="duration">Settings</label>
-                      <input type="text" class="form-control" id="duration" 
-                             placeholder="Enter duration" formControlName="duration" 
-                             [ngClass]="{ 'is-invalid': quizSubmitted && f.duration.errors }">
-                      <div *ngIf="quizSubmitted && f.duration.errors" class="invalid-feedback">
-                          <div *ngIf="f.duration.errors.pattern">Only numbers are allowed</div>
-                      </div>               
-                    </div>
-                    <div class="form-group">
-                      <label for="nextSubmissionAfter">Submissions timer</label>
-                      <input type="text" class="form-control" id="time" 
-                             placeholder="Enter submission time" formControlName="nextSubmissionAfter" 
-                             [ngClass]="{ 'is-invalid': quizSubmitted && f.nextSubmissionAfter.errors }">
-                      <div *ngIf="quizSubmitted && f.nextSubmissionAfter.errors" class="invalid-feedback">
-                          <div *ngIf="f.nextSubmissionAfter.errors.pattern">Only numbers are allowed</div>
-                      </div>               
-                    </div> 
-                    <div class="form-group">
-                      <label for="timeActive">Time active</label>
-                      <input type="text" class="form-control" id="timeActive" 
-                             placeholder="Enter time active" formControlName="timeActive" 
-                             [ngClass]="{ 'is-invalid': quizSubmitted && f.timeActive.errors }">
-                      <div *ngIf="quizSubmitted && f.timeActive.errors" class="invalid-feedback">
-                          <div *ngIf="f.timeActive.errors.pattern">Only numbers are allowed</div>
-                      </div>               
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" formControlName="paginated">
-                        <label class="form-check-label" for="paginated">Paginated?</label>
-                    </div>
-                    <div class="form-group">
-                      <label for="perPage">Per page</label>
-                      <input type="text" class="form-control" id="perPage" 
-                             formControlName="perPage" 
-                             [ngClass]="{ 'is-invalid': quizSubmitted && f.perPage.errors }">
-                      <div *ngIf="quizSubmitted && f.perPage.errors" class="invalid-feedback">
-                          <div *ngIf="f.perPage.errors.pattern">Only numbers are allowed</div>
-                      </div>               
-                    </div> 
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" formControlName="randomQuestions">
-                        <label class="form-check-label" for="randomQuestions">Random questions?</label>
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" formControlName="randomAnswers">
-                        <label class="form-check-label" for="randomAnswers">Random answers?</label>
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" formControlName="immediateAnswers">
-                        <label class="form-check-label" for="immediateAnswers">Immediate answers?</label>
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" formControlName="restrictSubmissions">
-                        <label class="form-check-label" for="restrictSubmissions">Restrict submissions?</label>
-                    </div>
-                    <div class="form-group">
-                      <label for="allowedSubmissions">Allowed submissions</label>
-                      <input type="text" class="form-control" id="submissionsNo" 
-                             formControlName="allowedSubmissions" 
-                             [ngClass]="{ 'is-invalid': quizSubmitted && f.allowedSubmissions.errors }">
-                      <div *ngIf="quizSubmitted && f.allowedSubmissions.errors" class="invalid-feedback">
-                          <div *ngIf="f.allowedSubmissions.errors.pattern">Only numbers are allowed</div>
-                      </div>               
-                    </div>                      
+            </div>
+            <div class="spq-box-container-3">
+                <div class="spq-box">
+                    <h2>Settings</h2>
+                    <div class="spq-inside">
+                        
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" placeholder="Duration" formControlName="duration" 
+                                   [ngClass]="{ 'is-invalid': quizSubmitted && f.duration.errors }">                                   
+                            <div *ngIf="quizSubmitted && f.duration.errors" class="invalid-feedback">
+                                <div *ngIf="f.duration.errors.pattern">Only numbers are allowed</div>
+                            </div>
+                        </div> 
+
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" placeholder="Gap between submissions" formControlName="nextSubmissionAfter" 
+                                   [ngClass]="{ 'is-invalid': quizSubmitted && f.nextSubmissionAfter.errors }">                                   
+                            <div *ngIf="quizSubmitted && f.nextSubmissionAfter.errors" class="invalid-feedback">
+                                <div *ngIf="f.nextSubmissionAfter.errors.pattern">Only numbers are allowed</div>
+                            </div>
+                        </div> 
+                        
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" placeholder="Enter time active" formControlName="timeActive" 
+                                   [ngClass]="{ 'is-invalid': quizSubmitted && f.timeActive.errors }">                                  
+                            <div *ngIf="quizSubmitted && f.timeActive.errors" class="invalid-feedback">
+                                <div *ngIf="f.timeActive.errors.pattern">Only numbers are allowed</div>
+                            </div>
+                        </div>
+                        
+                        <div class="spq-input-wrap">
+                            <input type="checkbox" formControlName="paginated">
+                            <label>Paginated?</label>
+                        </div>
+
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" placeholder="Questions per page" formControlName="perPage" 
+                                 [ngClass]="{ 'is-invalid': quizSubmitted && f.perPage.errors }">                                 
+                            <div *ngIf="quizSubmitted && f.perPage.errors" class="invalid-feedback">
+                                <div *ngIf="f.perPage.errors.pattern">Only numbers are allowed</div>
+                            </div> 
+                        </div>
+                        
+ 
+                        <div class="spq-input-wrap">
+                            <input type="checkbox" formControlName="randomQuestions">
+                            <label>Random questions?</label>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox" formControlName="randomAnswers">
+                            <label>Random answers?</label>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox" formControlName="immediateAnswers">
+                            <label>Immediate answers?</label>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox" formControlName="restrictSubmissions">
+                            <label>Restrict submissions?</label>
+                        </div>
+                        
+                        <div class="spq-input-wrap">
+                            <input type="text" class="form-control" placeholder="Number of allowed submissions" formControlName="allowedSubmissions" 
+                                 [ngClass]="{ 'is-invalid': quizSubmitted && f.allowedSubmissions.errors }">                                
+                            <div *ngIf="quizSubmitted && f.allowedSubmissions.errors" class="invalid-feedback">
+                                <div *ngIf="f.allowedSubmissions.errors.pattern">Only numbers are allowed</div>
+                            </div> 
+                        </div>                        
+                    </div>                    
                 </div>
-                <div class="tab-pane fade" id="questions" role="tabpanel" aria-labelledby="questions-tab">
-                    <div class="row">
+            </div>
+            <div class="spq-box-container-6">
+                <div class="spq-box">
+                    <h2>Questions</h2>
+                    <div class="spq-inside">
                         <div class="col-sm-6" formGroupName="question">
                             <h3>New question</h3>
                             <div class="form-group">
@@ -271,10 +264,10 @@
                               </li>
                             </ul>                            
                         </div>
-                    </div>
+                    </div>                    
                 </div>
-            </div>                     
+            </div>            
         </div>
-    </div>
-</form>
+    </form>
+</div>
 
