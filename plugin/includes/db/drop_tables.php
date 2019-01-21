@@ -9,9 +9,9 @@ function drop_tables()
     $tables .= $wpdb->prefix.'spq_answers';
     $tables .= $wpdb->prefix.'spq_marks';
     $tables .= $wpdb->prefix.'spq_marks_types';
-    
+var_dump($sql);    
     $sql = "DROP TABLE IF EXISTS $tables";
     $wpdb->query($sql);
     
-    delete_option('db_version');     
+    delete_option('spq_db_version');     
 }
