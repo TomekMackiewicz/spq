@@ -85,99 +85,90 @@
                     </div>                    
                 </div>
             </div>
-            <div class="spq-box-container-3">
+            <div class="spq-box-container-3" formGroupName="question">
                 <div class="spq-box">
                     <h2>New question</h2>
                     <div class="spq-inside">
-                        <div formGroupName="question">
-                            <div class="spq-input-wrap">
-                              <input type="text" class="spq-input" placeholder="Enter title" formControlName="title" 
-                                     [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.title').errors }" required>
-                              <div *ngIf="questionSubmitted && quizForm.get('question.title').errors" class="invalid-feedback">
-                                  <div *ngIf="quizForm.get('question.title').errors.required">Title is required</div>
-                              </div>
-                            </div>
-                            <div class="spq-input-wrap">
-                              <textarea class="spq-textarea" rows="3" formControlName="description"></textarea>
-                            </div>      
-                            <div class="spq-input-wrap">
-                              <select class="form-control" formControlName="type" [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.type').errors }">
-                                <option value="" disabled selected>Type</option>
-                                <option>radio</option>
-                                <option>multi</option>
-                                <option>sort</option>
-                                <option>range</option>
-                                <option>select</option>
-                              </select>
-                              <div *ngIf="questionSubmitted && quizForm.get('question.type').errors" class="invalid-feedback">
-                                  <div *ngIf="quizForm.get('question.type').errors.required">Type is required</div>
-                              </div>        
-                            </div>
-                            <div class="spq-input-wrap">
-                              <textarea class="spq-textarea" rows="3" formControlName="hint"></textarea>
-                            </div>
-                            <div class="spq-input-wrap">
-                                <input type="checkbox" formControlName="isObligatory">
-                                <label>Obligatory?</label>
-                            </div>
-                            
-                            <h3>Answers</h3>
-                            <button type="button" class="button button-primary" (click)="addAnswer()">Add answer</button>
-                            <div>
-                              <ul class="list-group" formArrayName="answers">
-                                  <li class="list-group-item" *ngFor="let answer of quizForm.get('question.answers')?.controls; let i = index;">
-                                      <i *ngIf="!answerListState[i] || answerListState[i]==0; else answerChevronUp" 
-                                         class="fas fa-chevron-down float-right m-1" 
-                                         data-toggle="collapse" 
-                                         [attr.data-target]="'#answerContent_' + i"
-                                         (click)="toogleAnswerChevron(i)">
-                                      </i>
-                                      <i class="fas fa-trash-alt float-right m-1" (click)="deleteAnswer($event, i)"></i>
-                                      <ng-template #answerChevronUp>
-                                        <i class="fas fa-chevron-up float-right m-1" 
-                                          data-toggle="collapse" 
-                                          [attr.data-target]="'#answerContent_' + i"
-                                          (click)="toogleAnswerChevron(i)">
-                                        </i>
-                                      </ng-template>
-                                      <div class="collapse" id="answerContent_{{i}}">
-                                          <div class="card card-body">                
-                                              <div [formGroupName]="i">
-                                                  <div class="form-group">
-                                                      <label for="answerTitle_{{i}}">Title</label>
-                                                      <input type="text" class="form-control" id="answerTitle_{{i}}" formControlName="title" 
-                                                             [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.title.errors }" required>
-                                                      <div *ngIf="questionSubmitted && answer?.controls.title.errors" class="invalid-feedback">
-                                                          <div *ngIf="answer?.controls.title.errors.required">Title is required</div>
-                                                      </div>            
-                                                  </div>
-                                                  <div class="form-group form-check">
-                                                      <input type="checkbox" class="form-check-input" id="answerCorrect_{{i}}" formControlName="isCorrect">
-                                                      <label class="form-check-label" for="answerCorrect_{{i}}">Correct answer</label>
-                                                  </div>     
-                                                  <div class="form-group">
-                                                      <label for="answerMessage_{{i}}">Message</label>
-                                                      <textarea class="form-control" id="answerMessage_{{i}}" rows="3" formControlName="message"></textarea>
-                                                  </div>
-                                                    <div class="form-group">
-                                                      <label for="answerPoints_{{i}}">Points</label>
-                                                      <input type="text" class="form-control" id="answerPoints_{{i}}" 
-                                                             placeholder="Enter points" formControlName="points" 
-                                                             [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.points.errors }">
-                                                      <div *ngIf="questionSubmitted && answer?.controls.points.errors" class="invalid-feedback">
-                                                          <div *ngIf="answer?.controls.points.errors.pattern">Only numbers are allowed</div>
-                                                      </div>               
-                                                    </div>                                                  
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </li>
-                              </ul>
-                            </div>
-                            <button type="button" class="button button-primary" (click)="addQuestion()">Add question</button>                            
+                        <div class="spq-input-wrap">
+                          <input type="text" class="spq-input" placeholder="Enter title" formControlName="title" 
+                                 [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.title').errors }" required>
+                          <div *ngIf="questionSubmitted && quizForm.get('question.title').errors" class="invalid-feedback">
+                              <div *ngIf="quizForm.get('question.title').errors.required">Title is required</div>
+                          </div>
                         </div>
+                        <div class="spq-input-wrap">
+                          <textarea class="spq-textarea" formControlName="description" placeholder="Description"></textarea>
+                        </div>      
+                        <div class="spq-input-wrap">
+                          <select formControlName="type" [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.type').errors }">
+                            <option value="" disabled selected>Type</option>
+                            <option>radio</option>
+                            <option>multi</option>
+                            <option>sort</option>
+                            <option>range</option>
+                            <option>select</option>
+                          </select>
+                          <div *ngIf="questionSubmitted && quizForm.get('question.type').errors" class="invalid-feedback">
+                              <div *ngIf="quizForm.get('question.type').errors.required">Type is required</div>
+                          </div>        
+                        </div>
+                        <div class="spq-input-wrap">
+                          <textarea class="spq-textarea" formControlName="hint" placeholder="Hint"></textarea>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox" formControlName="isObligatory">
+                            <label>Obligatory?</label>
+                        </div>
+                        <button type="button" class="button button-primary" (click)="addQuestion()">Add question</button>                            
                     </div>                    
                 </div>
+                <div class="spq-box">
+                    <h2>Answers</h2>
+                    <div class="spq-inside">
+                        <button type="button" class="button button-primary" (click)="addAnswer()">Add answer</button>
+                        <ul formArrayName="answers">
+                            <li *ngFor="let answer of quizForm.get('question.answers')?.controls; let i = index;">
+                                <i *ngIf="!answerListState[i] || answerListState[i]==0; else answerChevronUp" 
+                                   class="fas fa-chevron-down float-right m-1"                                     
+                                   [attr.data-target]="'#answerContent_' + i"
+                                   (click)="toogleAnswerChevron(i)">
+                                </i>
+                                <i class="fas fa-trash-alt float-right m-1" (click)="deleteAnswer($event, i)"></i>
+                                <ng-template #answerChevronUp>
+                                  <i class="fas fa-chevron-up float-right m-1" 
+                                    [attr.data-target]="'#answerContent_' + i"
+                                    (click)="toogleAnswerChevron(i)">
+                                  </i>
+                                </ng-template>
+                                <div class="spq-collapse" [ngClass]="{ 'spq-show': answerListState[i]==1 }">               
+                                    <div [formGroupName]="i">
+                                        <div class="spq-input-wrap">
+                                            <input type="text" class="spq-input" formControlName="title" placeholder="Answer" 
+                                                   [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.title.errors }" required>
+                                            <div *ngIf="questionSubmitted && answer?.controls.title.errors" class="invalid-feedback">
+                                                <div *ngIf="answer?.controls.title.errors.required">Title is required</div>
+                                            </div>            
+                                        </div>
+                                        <div class="spq-input-wrap">
+                                            <input type="checkbox" formControlName="isCorrect">
+                                            <label>Correct answer</label>
+                                        </div>     
+                                        <div class="spq-input-wrap">
+                                            <textarea class="spq-textarea" formControlName="message" placeholder="Message"></textarea>
+                                        </div>
+                                          <div class="spq-input-wrap">
+                                            <input type="text" class="spq-input" placeholder="Points" formControlName="points" 
+                                                   [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.points.errors }">
+                                            <div *ngIf="questionSubmitted && answer?.controls.points.errors" class="invalid-feedback">
+                                                <div *ngIf="answer?.controls.points.errors.pattern">Only numbers are allowed</div>
+                                            </div>               
+                                          </div>                                                  
+                                    </div>                                   
+                                </div>
+                            </li>
+                        </ul>      
+                    </div>
+                </div>                
             </div>
             <div class="spq-box-container-3">
                 <div class="spq-box">
@@ -205,19 +196,17 @@
                             <i class="fas fa-cogs float-right m-1" (click)="edit($event, question)"></i>
                             <i *ngIf="!listState[i] || listState[i]==0; else chevronUp" 
                                class="fas fa-chevron-down float-right m-1" 
-                               data-toggle="collapse" 
                                [attr.data-target]="'#questionContent_' + i"
                                (click)="toogleQuestionChevron(i)">
                             </i>
                             <ng-template #chevronUp>
                               <i class="fas fa-chevron-up float-right m-1" 
-                                data-toggle="collapse" 
                                 [attr.data-target]="'#questionContent_' + i"
                                 (click)="toogleQuestionChevron(i)">
                               </i>
                             </ng-template>
                             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                            <div class="collapse" id="questionContent_{{i}}">
+                            <div class="spq-collapse" [ngClass]="{ 'spq-show': listState[i]==1 }">
                               <div class="card card-body">
                                   <p>Desc: {{ question.description }}</p>
                                   <p>Hint: {{ question.hint }}</p>
@@ -256,7 +245,7 @@
                             <span class="badge badge-info">{{ i+1 }}</span> 
                             {{ question.title }}
                             <i class="fas fa-arrows-alt float-right m-1" cdkDragHandle></i>       
-                            <i class="fas fa-trash-alt float-right m-1" (click)="delete($event, 'tmpQuestions', i)"></i>
+                            <i class="fas fa-trash-alt float-right m-1" (click)="deleteQuestion($event, 'tmpQuestions', i)"></i>
                           </li>
                         </ul>                        
                     </div>
