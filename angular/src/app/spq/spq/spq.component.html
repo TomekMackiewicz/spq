@@ -126,16 +126,16 @@
                     <h2>Answers</h2>
                     <div class="spq-inside">
                         <button type="button" class="button button-primary" (click)="addAnswer()">Add answer</button>
-                        <ul formArrayName="answers">
+                        <ul class="spq-list-group" formArrayName="answers">
                             <li *ngFor="let answer of quizForm.get('question.answers')?.controls; let i = index;">
                                 <i *ngIf="!answerListState[i] || answerListState[i]==0; else answerChevronUp" 
-                                   class="fas fa-chevron-down float-right m-1"                                     
+                                   class="fas fa-chevron-down spq-control-icon"                                     
                                    [attr.data-target]="'#answerContent_' + i"
                                    (click)="toogleAnswerChevron(i)">
                                 </i>
-                                <i class="fas fa-trash-alt float-right m-1" (click)="deleteAnswer($event, i)"></i>
+                                <i class="fas fa-trash-alt spq-control-icon" (click)="deleteAnswer($event, i)"></i>
                                 <ng-template #answerChevronUp>
-                                  <i class="fas fa-chevron-up float-right m-1" 
+                                  <i class="fas fa-chevron-up spq-control-icon" 
                                     [attr.data-target]="'#answerContent_' + i"
                                     (click)="toogleAnswerChevron(i)">
                                   </i>
@@ -179,47 +179,46 @@
                           #questionsList="cdkDropList"
                           [cdkDropListData]="questions"
                           [cdkDropListConnectedTo]="[tmpQuestionsList]"
-                          class="list-group"
+                          class="spq-list-group"
                           (cdkDropListDropped)="drop($event)">
 
-                          <li class="list-group-item" *ngIf="questions.length==0">
-                            <div class="example-custom-placeholder"></div>
+                          <li *ngIf="questions.length==0">
+                            <div class="spq-placeholder"></div>
+                            
                           </li>
 
-                          <li class="list-group-item" *ngFor="let question of questions; let i = index" cdkDrag>
-                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                            <span class="badge badge-info">{{ i+1 }}</span> 
+                          <li *ngFor="let question of questions; let i = index" cdkDrag>
+                            <div class="spq-placeholder" *cdkDragPlaceholder></div>
+                            <span class="spq-badge">{{ i+1 }}</span>                           
                             {{ question.title }}
-                            <i class="fas fa-arrows-alt float-right m-1" cdkDragHandle></i> 
-                            <i class="fas fa-trash-alt float-right m-1" (click)="deleteQuestion($event, 'questions', i)"></i>
-                            <i class="far fa-clone float-right m-1" (click)="cloneQuestion($event, question)"></i>
-                            <i class="fas fa-cogs float-right m-1" (click)="edit($event, question)"></i>
+                            <i class="fas fa-arrows-alt spq-control-icon" cdkDragHandle></i> 
+                            <i class="fas fa-trash-alt spq-control-icon" (click)="deleteQuestion($event, 'questions', i)"></i>
+                            <i class="far fa-clone spq-control-icon" (click)="cloneQuestion($event, question)"></i>
+                            <i class="fas fa-cogs spq-control-icon" (click)="edit($event, question)"></i>
                             <i *ngIf="!listState[i] || listState[i]==0; else chevronUp" 
-                               class="fas fa-chevron-down float-right m-1" 
+                               class="fas fa-chevron-down spq-control-icon" 
                                [attr.data-target]="'#questionContent_' + i"
                                (click)="toogleQuestionChevron(i)">
                             </i>
                             <ng-template #chevronUp>
-                              <i class="fas fa-chevron-up float-right m-1" 
+                              <i class="fas fa-chevron-up spq-control-icon" 
                                 [attr.data-target]="'#questionContent_' + i"
                                 (click)="toogleQuestionChevron(i)">
                               </i>
                             </ng-template>
-                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                            <div class="spq-placeholder" *cdkDragPlaceholder></div>
                             <div class="spq-collapse" [ngClass]="{ 'spq-show': listState[i]==1 }">
-                              <div class="card card-body">
-                                  <p>Desc: {{ question.description }}</p>
-                                  <p>Hint: {{ question.hint }}</p>
-                                  <p>Type: {{ question.type }}</p>
-                                  <p>Obligatory: {{ question.isObligatory }}</p>
-                                  <p>Answers:</p>
-                                  <div *ngFor="let answer of question.answers">
-                                      <p>Title: {{ answer.title }}</p>
-                                      <p>Correct: {{ answer.isCorrect }}</p>
-                                      <p>Message: {{ answer.message }}</p>
-                                      <p>Points: {{ answer.points }}</p>
-                                  </div>
-                              </div>
+                                <p>Desc: {{ question.description }}</p>
+                                <p>Hint: {{ question.hint }}</p>
+                                <p>Type: {{ question.type }}</p>
+                                <p>Obligatory: {{ question.isObligatory }}</p>
+                                <p>Answers:</p>
+                                <div *ngFor="let answer of question.answers">
+                                    <p>Title: {{ answer.title }}</p>
+                                    <p>Correct: {{ answer.isCorrect }}</p>
+                                    <p>Message: {{ answer.message }}</p>
+                                    <p>Points: {{ answer.points }}</p>
+                                </div>
                             </div>
                           </li>
                         </ul>
@@ -233,19 +232,20 @@
                           #tmpQuestionsList="cdkDropList"
                           [cdkDropListData]="tmpQuestions"
                           [cdkDropListConnectedTo]="[questionsList]"
-                          class="list-group"
+                          class="spq-list-group"
                           (cdkDropListDropped)="drop($event)">
 
-                          <li class="list-group-item" *ngIf="tmpQuestions.length==0">
-                            <div class="example-custom-placeholder"></div>
+                          <li *ngIf="tmpQuestions.length==0">
+                            <div class="spq-placeholder"></div>
                           </li>
 
-                          <li class="list-group-item" *ngFor="let question of tmpQuestions; let i = index" cdkDrag>
-                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                            <span class="badge badge-info">{{ i+1 }}</span> 
+                          <li *ngFor="let question of tmpQuestions; let i = index" cdkDrag>
+                            <div class="spq-placeholder" *cdkDragPlaceholder></div>
+                            <span class="spq-badge">{{ i+1 }}</span>
+                            
                             {{ question.title }}
-                            <i class="fas fa-arrows-alt float-right m-1" cdkDragHandle></i>       
-                            <i class="fas fa-trash-alt float-right m-1" (click)="deleteQuestion($event, 'tmpQuestions', i)"></i>
+                            <i class="fas fa-arrows-alt spq-control-icon" cdkDragHandle></i>       
+                            <i class="fas fa-trash-alt spq-control-icon" (click)="deleteQuestion($event, 'tmpQuestions', i)"></i>
                           </li>
                         </ul>                        
                     </div>
