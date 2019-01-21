@@ -26,8 +26,7 @@
             <div class="spq-box-container-3">
                 <div class="spq-box">
                     <h2>Settings</h2>
-                    <div class="spq-inside">
-                        
+                    <div class="spq-inside">                     
                         <div class="spq-input-wrap">
                             <input type="text" class="spq-input" placeholder="Duration" formControlName="duration" 
                                    [ngClass]="{ 'is-invalid': quizSubmitted && f.duration.errors }">                                   
@@ -35,7 +34,6 @@
                                 <div *ngIf="f.duration.errors.pattern">Only numbers are allowed</div>
                             </div>
                         </div> 
-
                         <div class="spq-input-wrap">
                             <input type="text" class="spq-input" placeholder="Gap between submissions" formControlName="nextSubmissionAfter" 
                                    [ngClass]="{ 'is-invalid': quizSubmitted && f.nextSubmissionAfter.errors }">                                   
@@ -43,7 +41,6 @@
                                 <div *ngIf="f.nextSubmissionAfter.errors.pattern">Only numbers are allowed</div>
                             </div>
                         </div> 
-                        
                         <div class="spq-input-wrap">
                             <input type="text" class="spq-input" placeholder="Enter time active" formControlName="timeActive" 
                                    [ngClass]="{ 'is-invalid': quizSubmitted && f.timeActive.errors }">                                  
@@ -51,12 +48,10 @@
                                 <div *ngIf="f.timeActive.errors.pattern">Only numbers are allowed</div>
                             </div>
                         </div>
-                        
                         <div class="spq-input-wrap">
                             <input type="checkbox" formControlName="paginated">
                             <label>Paginated?</label>
                         </div>
-
                         <div class="spq-input-wrap">
                             <input type="text" class="spq-input" placeholder="Questions per page" formControlName="perPage" 
                                  [ngClass]="{ 'is-invalid': quizSubmitted && f.perPage.errors }">                                 
@@ -64,8 +59,6 @@
                                 <div *ngIf="f.perPage.errors.pattern">Only numbers are allowed</div>
                             </div> 
                         </div>
-                        
- 
                         <div class="spq-input-wrap">
                             <input type="checkbox" formControlName="randomQuestions">
                             <label>Random questions?</label>
@@ -82,9 +75,8 @@
                             <input type="checkbox" formControlName="restrictSubmissions">
                             <label>Restrict submissions?</label>
                         </div>
-                        
                         <div class="spq-input-wrap">
-                            <input type="text" class="form-control" placeholder="Number of allowed submissions" formControlName="allowedSubmissions" 
+                            <input type="text" class="spq-input" placeholder="Number of allowed submissions" formControlName="allowedSubmissions" 
                                  [ngClass]="{ 'is-invalid': quizSubmitted && f.allowedSubmissions.errors }">                                
                             <div *ngIf="quizSubmitted && f.allowedSubmissions.errors" class="invalid-feedback">
                                 <div *ngIf="f.allowedSubmissions.errors.pattern">Only numbers are allowed</div>
@@ -93,29 +85,24 @@
                     </div>                    
                 </div>
             </div>
-            <div class="spq-box-container-6">
+            <div class="spq-box-container-3">
                 <div class="spq-box">
-                    <h2>Questions</h2>
+                    <h2>New question</h2>
                     <div class="spq-inside">
-                        <div class="col-sm-6" formGroupName="question">
-                            <h3>New question</h3>
-                            <div class="form-group">
-                              <label for="questionTitle">Title</label>
-                              <input type="text" class="form-control" id="questionTitle" 
-                                     placeholder="Enter title" formControlName="title" 
+                        <div formGroupName="question">
+                            <div class="spq-input-wrap">
+                              <input type="text" class="spq-input" placeholder="Enter title" formControlName="title" 
                                      [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.title').errors }" required>
                               <div *ngIf="questionSubmitted && quizForm.get('question.title').errors" class="invalid-feedback">
                                   <div *ngIf="quizForm.get('question.title').errors.required">Title is required</div>
                               </div>
                             </div>
-                            <div class="form-group">
-                              <label for="questionDescription">Description</label>
-                              <textarea class="form-control" id="questionDescription" rows="3" formControlName="description"></textarea>
+                            <div class="spq-input-wrap">
+                              <textarea class="spq-textarea" rows="3" formControlName="description"></textarea>
                             </div>      
-                            <div class="form-group">
-                              <label for="questionType">Type</label>
-                              <select class="form-control" id="questionType" formControlName="type" 
-                                      [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.type').errors }">
+                            <div class="spq-input-wrap">
+                              <select class="form-control" formControlName="type" [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.type').errors }">
+                                <option value="" disabled selected>Type</option>
                                 <option>radio</option>
                                 <option>multi</option>
                                 <option>sort</option>
@@ -126,16 +113,16 @@
                                   <div *ngIf="quizForm.get('question.type').errors.required">Type is required</div>
                               </div>        
                             </div>
-                            <div class="form-group">
-                              <label for="questionHint">Hint</label>
-                              <textarea class="form-control" id="questionHint" rows="3" formControlName="hint"></textarea>
+                            <div class="spq-input-wrap">
+                              <textarea class="spq-textarea" rows="3" formControlName="hint"></textarea>
                             </div>
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" formControlName="isObligatory">
-                                <label class="form-check-label" for="isObligatory">Obligatory?</label>
-                            </div>                            
-                              <h3>Answers</h3>
-                            <button type="button" class="btn btn-primary" (click)="addAnswer()">Add answer</button>
+                            <div class="spq-input-wrap">
+                                <input type="checkbox" formControlName="isObligatory">
+                                <label>Obligatory?</label>
+                            </div>
+                            
+                            <h3>Answers</h3>
+                            <button type="button" class="button button-primary" (click)="addAnswer()">Add answer</button>
                             <div>
                               <ul class="list-group" formArrayName="answers">
                                   <li class="list-group-item" *ngFor="let answer of quizForm.get('question.answers')?.controls; let i = index;">
@@ -187,86 +174,94 @@
                                   </li>
                               </ul>
                             </div>
-                            <button type="button" class="btn btn-primary" (click)="addQuestion()">Add question</button>                            
-                        </div>
-                        <div class="col-sm-6">
-                            <h3>List of questions</h3>
-                            <ul
-                              cdkDropList
-                              #questionsList="cdkDropList"
-                              [cdkDropListData]="questions"
-                              [cdkDropListConnectedTo]="[tmpQuestionsList]"
-                              class="list-group"
-                              (cdkDropListDropped)="drop($event)">
-
-                              <li class="list-group-item" *ngIf="questions.length==0">
-                                <div class="example-custom-placeholder"></div>
-                              </li>
-
-                              <li class="list-group-item" *ngFor="let question of questions; let i = index" cdkDrag>
-                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                                <span class="badge badge-info">{{ i+1 }}</span> 
-                                {{ question.title }}
-                                <i class="fas fa-arrows-alt float-right m-1" cdkDragHandle></i> 
-                                <i class="fas fa-trash-alt float-right m-1" (click)="deleteQuestion($event, 'questions', i)"></i>
-                                <i class="far fa-clone float-right m-1" (click)="cloneQuestion($event, question)"></i>
-                                <i class="fas fa-cogs float-right m-1" (click)="edit($event, question)"></i>
-                                <i *ngIf="!listState[i] || listState[i]==0; else chevronUp" 
-                                   class="fas fa-chevron-down float-right m-1" 
-                                   data-toggle="collapse" 
-                                   [attr.data-target]="'#questionContent_' + i"
-                                   (click)="toogleQuestionChevron(i)">
-                                </i>
-                                <ng-template #chevronUp>
-                                  <i class="fas fa-chevron-up float-right m-1" 
-                                    data-toggle="collapse" 
-                                    [attr.data-target]="'#questionContent_' + i"
-                                    (click)="toogleQuestionChevron(i)">
-                                  </i>
-                                </ng-template>
-                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                                <div class="collapse" id="questionContent_{{i}}">
-                                  <div class="card card-body">
-                                      <p>Desc: {{ question.description }}</p>
-                                      <p>Hint: {{ question.hint }}</p>
-                                      <p>Type: {{ question.type }}</p>
-                                      <p>Obligatory: {{ question.isObligatory }}</p>
-                                      <p>Answers:</p>
-                                      <div *ngFor="let answer of question.answers">
-                                          <p>Title: {{ answer.title }}</p>
-                                          <p>Correct: {{ answer.isCorrect }}</p>
-                                          <p>Message: {{ answer.message }}</p>
-                                          <p>Points: {{ answer.points }}</p>
-                                      </div>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul>
-                            <h3>Temp questions</h3>
-                            <ul
-                              cdkDropList
-                              #tmpQuestionsList="cdkDropList"
-                              [cdkDropListData]="tmpQuestions"
-                              [cdkDropListConnectedTo]="[questionsList]"
-                              class="list-group"
-                              (cdkDropListDropped)="drop($event)">
-
-                              <li class="list-group-item" *ngIf="tmpQuestions.length==0">
-                                <div class="example-custom-placeholder"></div>
-                              </li>
-
-                              <li class="list-group-item" *ngFor="let question of tmpQuestions; let i = index" cdkDrag>
-                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                                <span class="badge badge-info">{{ i+1 }}</span> 
-                                {{ question.title }}
-                                <i class="fas fa-arrows-alt float-right m-1" cdkDragHandle></i>       
-                                <i class="fas fa-trash-alt float-right m-1" (click)="delete($event, 'tmpQuestions', i)"></i>
-                              </li>
-                            </ul>                            
+                            <button type="button" class="button button-primary" (click)="addQuestion()">Add question</button>                            
                         </div>
                     </div>                    
                 </div>
-            </div>            
+            </div>
+            <div class="spq-box-container-3">
+                <div class="spq-box">
+                    <h2>List of questions</h2>
+                    <div class="spq-inside">
+                        <ul
+                          cdkDropList
+                          #questionsList="cdkDropList"
+                          [cdkDropListData]="questions"
+                          [cdkDropListConnectedTo]="[tmpQuestionsList]"
+                          class="list-group"
+                          (cdkDropListDropped)="drop($event)">
+
+                          <li class="list-group-item" *ngIf="questions.length==0">
+                            <div class="example-custom-placeholder"></div>
+                          </li>
+
+                          <li class="list-group-item" *ngFor="let question of questions; let i = index" cdkDrag>
+                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                            <span class="badge badge-info">{{ i+1 }}</span> 
+                            {{ question.title }}
+                            <i class="fas fa-arrows-alt float-right m-1" cdkDragHandle></i> 
+                            <i class="fas fa-trash-alt float-right m-1" (click)="deleteQuestion($event, 'questions', i)"></i>
+                            <i class="far fa-clone float-right m-1" (click)="cloneQuestion($event, question)"></i>
+                            <i class="fas fa-cogs float-right m-1" (click)="edit($event, question)"></i>
+                            <i *ngIf="!listState[i] || listState[i]==0; else chevronUp" 
+                               class="fas fa-chevron-down float-right m-1" 
+                               data-toggle="collapse" 
+                               [attr.data-target]="'#questionContent_' + i"
+                               (click)="toogleQuestionChevron(i)">
+                            </i>
+                            <ng-template #chevronUp>
+                              <i class="fas fa-chevron-up float-right m-1" 
+                                data-toggle="collapse" 
+                                [attr.data-target]="'#questionContent_' + i"
+                                (click)="toogleQuestionChevron(i)">
+                              </i>
+                            </ng-template>
+                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                            <div class="collapse" id="questionContent_{{i}}">
+                              <div class="card card-body">
+                                  <p>Desc: {{ question.description }}</p>
+                                  <p>Hint: {{ question.hint }}</p>
+                                  <p>Type: {{ question.type }}</p>
+                                  <p>Obligatory: {{ question.isObligatory }}</p>
+                                  <p>Answers:</p>
+                                  <div *ngFor="let answer of question.answers">
+                                      <p>Title: {{ answer.title }}</p>
+                                      <p>Correct: {{ answer.isCorrect }}</p>
+                                      <p>Message: {{ answer.message }}</p>
+                                      <p>Points: {{ answer.points }}</p>
+                                  </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="spq-box">
+                    <h2>Temp questions</h2>
+                    <div class="spq-inside">
+                        <ul
+                          cdkDropList
+                          #tmpQuestionsList="cdkDropList"
+                          [cdkDropListData]="tmpQuestions"
+                          [cdkDropListConnectedTo]="[questionsList]"
+                          class="list-group"
+                          (cdkDropListDropped)="drop($event)">
+
+                          <li class="list-group-item" *ngIf="tmpQuestions.length==0">
+                            <div class="example-custom-placeholder"></div>
+                          </li>
+
+                          <li class="list-group-item" *ngFor="let question of tmpQuestions; let i = index" cdkDrag>
+                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                            <span class="badge badge-info">{{ i+1 }}</span> 
+                            {{ question.title }}
+                            <i class="fas fa-arrows-alt float-right m-1" cdkDragHandle></i>       
+                            <i class="fas fa-trash-alt float-right m-1" (click)="delete($event, 'tmpQuestions', i)"></i>
+                          </li>
+                        </ul>                        
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>

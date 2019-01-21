@@ -34,7 +34,7 @@
     font-size: 13px;        
 }
 
-.spq-box h2 {
+.spq-box h2, .spq-inside h2 {
     font-size: 14px;
     padding: 8px 12px; 
     border-bottom: 1px solid #eee;
