@@ -26,21 +26,20 @@ along with {Plugin Name}. If not, see {License URI}.
 
 defined('ABSPATH') or die('No script kiddies please!');
 
+global $db_version;
 $db_version = '1.0';
 
 require_once('includes/rest/rest.php');
-
 require_once('includes/db/install_tables.php');
 require_once('includes/db/drop_tables.php');
 
-register_activation_hook('includes/db/install_tables.php', 'install_tables');
+register_activation_hook(__FILE__, 'install_tables');
 
 //register_uninstall_hook('includes/db/drop_tables.php', 'drop_tables');
-register_deactivation_hook('includes/db/drop_tables.php', 'drop_tables');
+register_deactivation_hook(__FILE__, 'drop_tables');
 
 add_action('admin_menu', 'quiz_plugin_menu');
 add_action('admin_head', 'append_base_href');
-add_action('plugins_loaded', 'update_db_check');
 add_action('admin_enqueue_scripts', 'add_angular_scripts');
 
 add_action('rest_api_init', function() {
@@ -62,13 +61,12 @@ add_action('rest_api_init', function() {
   ));  
 });
 
-function add_angular_scripts($hook) {
+function add_angular_scripts($hook) 
+{
 //    if ('edit.php' != $hook) {
 //        return;
 //    }
 
-    //wp_register_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css');
-    //wp_enqueue_style('bootstrap');
     wp_register_style('spq-styles', plugin_dir_url(__FILE__).'dist/styles.css');
     wp_enqueue_style('spq-styles');    
     wp_register_style('font-awesome', 'https://use.fontawesome.com/releases/v5.6.1/css/all.css');
@@ -77,10 +75,6 @@ function add_angular_scripts($hook) {
     wp_enqueue_script('runtime', plugin_dir_url(__FILE__).'dist/runtime.js', array(), null, true);
     wp_enqueue_script('polyfills', plugin_dir_url(__FILE__).'dist/polyfills.js', array(), null, true);
     wp_enqueue_script('main', plugin_dir_url(__FILE__).'dist/main.js', array(), null, true);
-    
-    //wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.3.1.slim.min.js', array(), null, true);
-    //wp_enqueue_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array(), null, true);
-    //wp_enqueue_script('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', array(), null, true);
 }
 
 function append_base_href()
@@ -88,14 +82,16 @@ function append_base_href()
     echo '<base href="/wp/wp-admin/admin.php?">';
 }
 
-function quiz_plugin_menu() {
+function quiz_plugin_menu() 
+{
     add_menu_page( 'Quiz Plugin', 'Quiz Plugin', 'manage_options', 'quiz-plugin', 'quiz_plugin_options');
     add_submenu_page( 'quiz-plugin', 'Quiz Plugin Options', 'Quiz Plugin Options', 'manage_options', 'quiz-plugin-options', 'quiz_plugin_options');
     add_submenu_page( 'quiz-plugin', 'New Quiz', 'New Quiz', 'manage_options', 'new-quiz', 'add_new_quiz');
     add_submenu_page( 'quiz-plugin', 'Quizes', 'Quizes', 'manage_options', 'quizes', 'list_of_quizes');
 }
 
-function quiz_plugin_options() {
+function quiz_plugin_options() 
+{
     if (!current_user_can('manage_options')) {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
@@ -129,21 +125,3 @@ function list_of_quizes()
 
     require_once('includes/quizes_list.php');
 }
-
-// remove hook drop if !get_option('spq_preserve_db_tables')
-
-function update_db_check() 
-{    
-    global $db_version;
-    
-    if (get_option('spq_db_version') != $db_version) {
-        install_tables();
-    }
-}
-
-//function add_db_version_option()
-//{
-//    global $db_version;
-//    
-//    add_option('db_version', $db_version);
-//}
