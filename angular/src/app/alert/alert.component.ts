@@ -34,13 +34,13 @@ export class AlertComponent {
  
         switch (alert.type) {
             case AlertType.Success:
-                return 'alert alert-success';
+                return 'spq-alert spq-alert-success';
             case AlertType.Error:
-                return 'alert alert-danger';
+                return 'spq-alert spq-alert-danger';
             case AlertType.Info:
-                return 'alert alert-info';
+                return 'spq-alert spq-alert-info';
             case AlertType.Warning:
-                return 'alert alert-warning';
+                return 'spq-alert spq-alert-warning';
         }
     }
 }

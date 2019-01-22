@@ -1,27 +1,27 @@
 <?php
 
 /*
-Plugin Name:  Quiz
+Plugin Name:  S.P.Q
 Plugin URI:   https://example.com/plugins/the-basics/
-Description:  Tompo Quiz Plugin
+Description:  Survey Poll Quiz Plugin
 Version:      1.0
-Author:       Tompo
+Author:       Tomasz Mackiewicz
 Author URI:   https://author.example.com/
 License:      GPL2
-License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+License URI:  https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain:  wporg
 Domain Path:  /languages
 
-{Plugin Name} is free software: you can redistribute it and/or modify
+S.P.Q is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
+the Free Software Foundation, either version 3 of the License, or
 any later version.
-{Plugin Name} is distributed in the hope that it will be useful,
+S.P.Q is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
-along with {Plugin Name}. If not, see {License URI}.
+along with S.P.Q. If not, see https://www.gnu.org/licenses/gpl-3.0.html.
 */
 
 defined('ABSPATH') or die('No script kiddies please!');
@@ -60,6 +60,17 @@ add_action('rest_api_init', function() {
     'callback' => 'patch_quiz',
   ));  
 });
+
+add_shortcode( 'spq', 'spq_shortcode' );
+
+// [spq id="value"]
+function spq_shortcode($atts) {
+    $id = shortcode_atts(array(
+        'id' => '1'
+    ), $atts);
+
+    return "id = {$id['id']}";
+}
 
 function add_angular_scripts($hook) 
 {

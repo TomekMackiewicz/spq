@@ -11,8 +11,8 @@ export class Quiz {
   paginated: boolean;
   perPage: number;
   //marksType: number;
-  randomQuestions: boolean;
-  randomAnswers: boolean;
+  shuffleQuestions: boolean;
+  shuffleAnswers: boolean;
   immediateAnswers: boolean;
   restrictSubmissions: boolean;
   allowedSubmissions: number;      

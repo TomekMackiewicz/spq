@@ -85,11 +85,11 @@ export class SpqComponent implements OnInit {
                 this.quiz.perPage, 
                 [Validators.pattern("^[0-9]*$")]
             ),
-            randomQuestions: new FormControl(
-                this.quiz.randomQuestions
+            shuffleQuestions: new FormControl(
+                this.quiz.shuffleQuestions
             ),
-            randomAnswers: new FormControl(
-                this.quiz.randomAnswers
+            shuffleAnswers: new FormControl(
+                this.quiz.shuffleAnswers
             ),
             immediateAnswers: new FormControl(
                 this.quiz.immediateAnswers
