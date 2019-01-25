@@ -7,7 +7,7 @@ import { FieldConfig } from "../../../model/field.interface";
     template: `
         <div [formGroup]="group">
             <label>{{field.label}}</label>
-            <div *ngFor="let item of field.options">
+            <div *ngFor="let item of field.answers">
                 <input type="checkbox" [formControlName]="field.name">{{item}}
             </div>
         </div>

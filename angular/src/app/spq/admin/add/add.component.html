@@ -90,10 +90,10 @@
                     <h2>New question</h2>
                     <div class="spq-inside">
                         <div class="spq-input-wrap">
-                          <input type="text" class="spq-input" placeholder="Enter title" formControlName="title" 
-                                 [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.title').errors }" required>
-                          <div *ngIf="questionSubmitted && quizForm.get('question.title').errors" class="invalid-feedback">
-                              <div *ngIf="quizForm.get('question.title').errors.required">Title is required</div>
+                          <input type="text" class="spq-input" placeholder="Enter title" formControlName="label" 
+                                 [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.label').errors }" required>
+                          <div *ngIf="questionSubmitted && quizForm.get('question.label').errors" class="invalid-feedback">
+                              <div *ngIf="quizForm.get('question.label').errors.required">Title is required</div>
                           </div>
                         </div>
                         <div class="spq-input-wrap">
@@ -143,10 +143,10 @@
                                 <div class="spq-collapse" [ngClass]="{ 'spq-show': answerListState[i]==1 }">               
                                     <div [formGroupName]="i">
                                         <div class="spq-input-wrap">
-                                            <input type="text" class="spq-input" formControlName="title" placeholder="Answer" 
-                                                   [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.title.errors }" required>
-                                            <div *ngIf="questionSubmitted && answer?.controls.title.errors" class="invalid-feedback">
-                                                <div *ngIf="answer?.controls.title.errors.required">Title is required</div>
+                                            <input type="text" class="spq-input" formControlName="label" placeholder="Answer" 
+                                                   [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.label.errors }" required>
+                                            <div *ngIf="questionSubmitted && answer?.controls.label.errors" class="invalid-feedback">
+                                                <div *ngIf="answer?.controls.label.errors.required">Title is required</div>
                                             </div>            
                                         </div>
                                         <div class="spq-input-wrap">
@@ -190,7 +190,7 @@
                           <li *ngFor="let question of questions; let i = index" cdkDrag>
                             <div class="spq-placeholder" *cdkDragPlaceholder></div>
                             <span class="spq-badge">{{ i+1 }}</span>                           
-                            {{ question.title }}
+                            {{ question.label }}
                             <i class="fas fa-arrows-alt spq-control-icon" cdkDragHandle></i> 
                             <i class="fas fa-trash-alt spq-control-icon" (click)="deleteQuestion($event, 'questions', i)"></i>
                             <i class="far fa-clone spq-control-icon" (click)="cloneQuestion($event, question)"></i>
@@ -214,7 +214,7 @@
                                 <p>Obligatory: {{ question.isObligatory }}</p>
                                 <p>Answers:</p>
                                 <div *ngFor="let answer of question.answers">
-                                    <p>Title: {{ answer.title }}</p>
+                                    <p>Title: {{ answer.label }}</p>
                                     <p>Correct: {{ answer.isCorrect }}</p>
                                     <p>Message: {{ answer.message }}</p>
                                     <p>Points: {{ answer.points }}</p>
@@ -243,7 +243,7 @@
                             <div class="spq-placeholder" *cdkDragPlaceholder></div>
                             <span class="spq-badge">{{ i+1 }}</span>
                             
-                            {{ question.title }}
+                            {{ question.label }}
                             <i class="fas fa-arrows-alt spq-control-icon" cdkDragHandle></i>       
                             <i class="fas fa-trash-alt spq-control-icon" (click)="deleteQuestion($event, 'tmpQuestions', i)"></i>
                           </li>

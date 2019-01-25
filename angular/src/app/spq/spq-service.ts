@@ -4,10 +4,12 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class SpqService {
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        // get site base url!!!
+    }
 
     getQuiz(id: number) {
-        return this.http.get('http://localhost/wp/wp-json/quiz/v1/quiz/' + id);
+        return this.http.get('http://localhost/wp/wp-json/quiz/v1/quiz/4');
     }
 
     getQuizes() {

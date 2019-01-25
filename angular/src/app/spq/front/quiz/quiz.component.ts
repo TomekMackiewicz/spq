@@ -37,34 +37,21 @@ export class QuizComponent implements OnInit {
         this.getQuiz();      
     }    
             
-    prepareQuiz(questions: any) { // Array<Question>  
-        let test: FieldConfig[] = [];     
+    prepareQuestions(questions: any) { // Array<Question>      
         for (let question of questions) {
             let options: Array<string> = [];
             for (let answer of question.answers) {
-                options.push(answer.title);
+                options.push(answer.label);
             }
-                       
-            if (question.type == 'multi') {
-                test.push({ 
-                    type: question.type,
-                    label: question.title,
-                    name: question.id,
-                    options: options,
-                    value: null    
-                });                
-            } else {
-                test.push({ 
-                    type: question.type,
-                    label: question.title,
-                    name: question.id,
-                    options: options,
-                    value: null     
-                });                
-            }
+                                   
+            this.regConfig.push({ 
+                type: question.type,
+                label: question.label,
+                name: question.id, // quiz id, question type + rand ?
+                answers: options,
+                value: null     
+            });
         }
-        
-        return test;
     }
 
     submit(value: any) {}
@@ -75,8 +62,7 @@ export class QuizComponent implements OnInit {
         .subscribe(
             (data: Quiz) => {
                 this.quiz = data;
-                this.regConfig = this.prepareQuiz(this.quiz.questions);
-                //console.log(this.regConfig);
+                this.prepareQuestions(this.quiz.questions);
             },
             error => { 
                 console.log(error) 

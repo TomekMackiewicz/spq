@@ -113,8 +113,8 @@ export class AddComponent implements OnInit {
                 [Validators.pattern("^[0-9]*$")]
             ),
             question: this.fb.group({
-                title: new FormControl(
-                    this.question.title, 
+                label: new FormControl(
+                    this.question.label, 
                     [Validators.required]
                 ),
                 description: new FormControl(
@@ -137,8 +137,8 @@ export class AddComponent implements OnInit {
 
     createAnswer(): FormGroup {
         return this.fb.group({
-            title: new FormControl(
-                this.answer.title, 
+            label: new FormControl(
+                this.answer.label, 
                 [Validators.required]
             ),
             isCorrect: new FormControl(

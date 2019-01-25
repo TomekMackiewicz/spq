@@ -8,7 +8,7 @@ export interface FieldConfig {
     label?: string;
     name?: string;
     inputType?: string;
-    options?: string[];
+    answers?: string[];
     collections?: any;
     type: string;
     value?: any;
