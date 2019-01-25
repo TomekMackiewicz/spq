@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -10,23 +10,46 @@ import { MatIconModule } from '@angular/material/icon';
 
 //import { SpqRoutingModule } from './spq-routing.module';
 
-import { SpqComponent } from './spq/spq.component';
-import { SpqService } from './spq/spq-service';
+import { AddComponent } from './admin/add/add.component';
+import { QuizComponent } from './front/quiz/quiz.component';
+
+import { SelectComponent } from './front/fields/select/select.component';
+import { RadioComponent } from './front/fields/radio/radio.component';
+import { MultiComponent } from './front/fields/multi/multi.component';
+
+import { DynamicFieldDirective } from "./front/fields/dynamic-field/dynamic-field.directive";
+import { DynamicFormComponent } from './front/dynamic-form/dynamic-form.component';
+
+import { SpqService } from './spq-service';
 
 @NgModule({
-  declarations: [SpqComponent],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    BrowserModule, 
-    ReactiveFormsModule, 
-    DragDropModule, 
-    BrowserAnimationsModule, 
-    MatExpansionModule, 
-    MatIconModule    
-  ],
+    declarations: [
+        AddComponent,
+        QuizComponent,
+        SelectComponent,
+        RadioComponent,
+        MultiComponent,
+        DynamicFieldDirective,
+        DynamicFormComponent        
+    ],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        BrowserModule, 
+        FormsModule,
+        ReactiveFormsModule, 
+        DragDropModule, 
+        BrowserAnimationsModule, 
+        MatExpansionModule, 
+        MatIconModule    
+    ],
     providers: [
         SpqService
-    ]  
+    ],
+    entryComponents: [
+        SelectComponent,
+        RadioComponent,
+        MultiComponent
+    ]      
 })
 export class SpqModule { }

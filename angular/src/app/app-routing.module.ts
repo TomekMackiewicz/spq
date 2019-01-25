@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SpqComponent } from './spq/spq/spq.component';
+import { AddComponent } from './spq/admin/add/add.component';
+import { QuizComponent } from './spq/front/quiz/quiz.component';
 
 const routes: Routes = [
-    //{ path: '', redirectTo: 'admin.php/:page', pathMatch: 'full' },
-    { path: '', component: SpqComponent }
+    { path: 'front', component: QuizComponent },
+    { path: '', component: AddComponent }   
 ];
 
 @NgModule({
