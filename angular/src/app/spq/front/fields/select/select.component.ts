@@ -8,7 +8,7 @@ import { FieldConfig } from "../../../model/field.interface";
         <div [formGroup]="group">
             <select [formControlName]="field.name">
                 <option value="" disabled selected>Type</option>
-                <option *ngFor="let item of field.answers" [value]="item">{{item}}</option>
+                <option *ngFor="let item of field.answers" [value]="item">{{item.label}}</option>
             </select>
         </div>
     `,

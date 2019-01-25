@@ -9,6 +9,7 @@ import { FieldConfig, Validator } from "../../model/field.interface";
         <form [formGroup]="form" (submit)="onSubmit($event)">
             <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
             </ng-container>
+            <button type="submit">Submit</button>
         </form>
     `
 })
@@ -34,7 +35,7 @@ export class DynamicFormComponent implements OnInit {
     createControl() {
         const group = this.fb.group({});
         this.fields.forEach(field => {
-            if (field.type === "button") return;
+            if (field.type === "submit") return;
 
             const control = this.fb.control(
                 field.value,

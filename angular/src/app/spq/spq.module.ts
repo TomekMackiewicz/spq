@@ -16,6 +16,7 @@ import { QuizComponent } from './front/quiz/quiz.component';
 import { SelectComponent } from './front/fields/select/select.component';
 import { RadioComponent } from './front/fields/radio/radio.component';
 import { MultiComponent } from './front/fields/multi/multi.component';
+import { SubmitComponent } from './front/fields/submit/submit.component'; // remove?
 
 import { DynamicFieldDirective } from "./front/fields/dynamic-field/dynamic-field.directive";
 import { DynamicFormComponent } from './front/dynamic-form/dynamic-form.component';
@@ -29,6 +30,7 @@ import { SpqService } from './spq-service';
         SelectComponent,
         RadioComponent,
         MultiComponent,
+        SubmitComponent,
         DynamicFieldDirective,
         DynamicFormComponent        
     ],
@@ -49,7 +51,8 @@ import { SpqService } from './spq-service';
     entryComponents: [
         SelectComponent,
         RadioComponent,
-        MultiComponent
+        MultiComponent,
+        SubmitComponent
     ]      
 })
 export class SpqModule { }

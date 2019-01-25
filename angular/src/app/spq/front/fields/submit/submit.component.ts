@@ -1,26 +1,19 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FieldConfig } from "../../../model/field.interface";
-
 @Component({
-    selector: "app-radio",
+    selector: "app-submit",
     template: `
         <div [formGroup]="group">
-            <label>{{field.label}}</label>
-            <div *ngFor="let item of field.answers">
-                <input type="radio" [formControlName]="field.name" [value]="item">
-                    {{item.label}}
-            </div>
+            <button type="submit">{{field.label}}</button>
         </div>
-    `,
+  `,
     styles: []
 })
-
-export class RadioComponent implements OnInit {
+export class SubmitComponent implements OnInit {
     field: FieldConfig;
     group: FormGroup;
-    
     constructor() {}
-
     ngOnInit() {}
 }
+

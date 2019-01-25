@@ -12,11 +12,13 @@ import { FieldConfig } from "../../../model/field.interface";
 import { SelectComponent } from "../select/select.component";
 import { RadioComponent } from "../radio/radio.component";
 import { MultiComponent } from "../multi/multi.component";
+import { SubmitComponent } from "../submit/submit.component";
 
 const componentMapper = {
     select: SelectComponent,
     radio: RadioComponent,
-    multi: MultiComponent
+    multi: MultiComponent,
+    submit: SubmitComponent // remove?
 };
 
 @Directive({

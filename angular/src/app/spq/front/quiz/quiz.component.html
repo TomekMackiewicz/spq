@@ -4,38 +4,7 @@
 
     <dynamic-form [fields]="regConfig" (submit)="submit($event)"></dynamic-form>
 
-
-</div>
-<!--    <div>
+    <div *ngIf="form?.length > 0">
         {{ form.value | json }}
-    </div>-->
-<!--    <div class="wrap" *ngIf="quiz">
-        <h2>{{ quiz.title }}</h2>
-        <p>{{ quiz.description }}</p>
-
-        <ul *ngFor="let question of quiz.questions">
-            
-            <li *ngIf="question.type === 'radio'">
-                <h3>{{ question.title }}</h3>
-                <div *ngFor="let answer of question.answers">
-                    <input type="radio" name="{{ question.id }}" value="{{ answer.title }}">
-                    {{ answer.title }}
-                </div>
-            </li>
-
-            <li *ngIf="question.type === 'multi'">
-                <h3>{{ question.title }}</h3>
-                <div *ngFor="let answer of question.answers">
-                    <input type="checkbox" name="{{ question.id }}" value="{{ answer.title }}">
-                    {{ answer.title }}
-                </div>
-            </li>
-            
-            <li *ngIf="question.type === 'sort'"></li>
-            
-            <li *ngIf="question.type === 'range'"></li>
-            
-            <li *ngIf="question.type === 'select'"></li>
-            
-        </ul>
-    </div>-->
+    </div>
+</div>

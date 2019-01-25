@@ -36,25 +36,10 @@ export class QuizComponent implements OnInit {
     ngOnInit(): void {
         this.getQuiz();      
     }    
-            
-    prepareQuestions(questions: any) { // Array<Question>      
-        for (let question of questions) {
-            let options: Array<string> = [];
-            for (let answer of question.answers) {
-                options.push(answer.label);
-            }
-                                   
-            this.regConfig.push({ 
-                type: question.type,
-                label: question.label,
-                name: question.id, // quiz id, question type + rand ?
-                answers: options,
-                value: null     
-            });
-        }
-    }
 
-    submit(value: any) {}
+    submit(value: any) {
+        console.log(value);
+    }
        
     getQuiz() {
         this.route.params.pipe(switchMap((params: Params) =>
@@ -62,7 +47,7 @@ export class QuizComponent implements OnInit {
         .subscribe(
             (data: Quiz) => {
                 this.quiz = data;
-                this.prepareQuestions(this.quiz.questions);
+                this.regConfig = this.quiz.questions;
             },
             error => { 
                 console.log(error) 
