@@ -6,7 +6,7 @@ import { FieldConfig } from "../../../model/field.interface";
     selector: "app-radio",
     template: `
         <div [formGroup]="group">
-            <label>{{field.label}}:</label>
+            <label>{{field.label}}</label>
             <div *ngFor="let item of field.options">
                 <input type="radio" [formControlName]="field.name" [value]="item">
                     {{item}}
@@ -24,12 +24,3 @@ export class RadioComponent implements OnInit {
 
     ngOnInit() {}
 }
-
-//        <div [formGroup]="group">
-//            <label>{{field.label}}:</label>
-//            <mat-radio-group [formControlName]="field.name">
-//                <mat-radio-button *ngFor="let item of field.options" [value]="item">
-//                    {{item}}
-//                </mat-radio-button>
-//            </mat-radio-group>
-//        </div>

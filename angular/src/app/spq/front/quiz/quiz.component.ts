@@ -25,7 +25,6 @@ export class QuizComponent implements OnInit {
 
     quiz: Quiz;
     regConfig: FieldConfig[] = [];
-    options: Array<string> = [];
 
     constructor(
         private route: ActivatedRoute,
@@ -38,23 +37,20 @@ export class QuizComponent implements OnInit {
         this.getQuiz();      
     }    
             
-    prepareQuiz(questions: Array<Question>) {
-        console.log(questions);  
+    prepareQuiz(questions: any) { // Array<Question>  
         let test: FieldConfig[] = [];     
         for (let question of questions) {
-            
-            //let options = [];
             let options: Array<string> = [];
             for (let answer of question.answers) {
-                this.options.push(answer.title);
-                //console.log(answer);
+                options.push(answer.title);
             }
-            
+                       
             if (question.type == 'multi') {
                 test.push({ 
                     type: question.type,
                     label: question.title,
                     name: question.id,
+                    options: options,
                     value: null    
                 });                
             } else {
@@ -62,7 +58,7 @@ export class QuizComponent implements OnInit {
                     type: question.type,
                     label: question.title,
                     name: question.id,
-                    options: ['1'],
+                    options: options,
                     value: null     
                 });                
             }

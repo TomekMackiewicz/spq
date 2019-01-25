@@ -6,7 +6,10 @@ import { FieldConfig } from "../../../model/field.interface";
     selector: "app-multi",
     template: `
         <div [formGroup]="group">
-            <input type="checkbox" [formControlName]="field.name">{{field.label}}
+            <label>{{field.label}}</label>
+            <div *ngFor="let item of field.options">
+                <input type="checkbox" [formControlName]="field.name">{{item}}
+            </div>
         </div>
     `,
     styles: []
