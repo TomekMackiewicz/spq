@@ -5,11 +5,13 @@ function get_quiz($data)
     global $wpdb;
     
     $table_name = $wpdb->prefix."spq_quizes";    
-    $quiz = $wpdb->get_results("SELECT * FROM $table_name WHERE id=".$data['id']);
+    $quiz = $wpdb->get_row("SELECT * FROM $table_name WHERE id=".$data['id']);
 
     if (empty($quiz)) {
         return null;
     }
+    
+    $quiz->questions = unserialize($quiz->questions);
  
     return $quiz;
 }

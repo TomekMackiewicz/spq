@@ -61,15 +61,27 @@ add_action('rest_api_init', function() {
   ));  
 });
 
-add_shortcode( 'spq', 'spq_shortcode' );
+
+add_shortcode('spq', 'spq_shortcode');
 
 // [spq id="value"]
 function spq_shortcode($atts) {
+    add_action( 'wp_head', 'append_href' );
+    
+
+    //wp_register_script
+    
     $id = shortcode_atts(array(
         'id' => '1'
     ), $atts);
 
-    return "id = {$id['id']}";
+    return "id = {$id['id']}"; // should return angular output
+}
+
+function append_href()
+{
+    
+    echo '<base href="/wp/wp-admin/admin.php?">';
 }
 
 function add_angular_scripts($hook) 
