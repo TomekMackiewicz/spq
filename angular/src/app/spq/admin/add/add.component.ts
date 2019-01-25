@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { SpqService } from './spq-service';
-import { AlertService } from '../../alert/alert.service';
-import { Quiz } from '../model/quiz';
-import { Question } from '../model/question';
-import { Answer } from '../model/answer';
+import { SpqService } from '../../spq-service';
+import { AlertService } from '../../../alert/alert.service';
+import { Quiz } from '../../model/quiz';
+import { Question } from '../../model/question';
+import { Answer } from '../../model/answer';
 
 @Component({
-    selector: 'app-spq',
-    templateUrl: './spq.component.html',
-    styleUrls: ['./spq.component.css']
+    selector: 'app-admin-add',
+    templateUrl: './add.component.html',
+    styleUrls: ['./add.component.css']
 })
-export class SpqComponent implements OnInit {
+export class AddComponent implements OnInit {
     
     quiz = new Quiz();
     quizForm: FormGroup;
