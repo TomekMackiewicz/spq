@@ -13,14 +13,26 @@ class My_List_Table extends WP_List_Table
 
         return $columns;
     }
+    
+    function get_sortable_columns() 
+    {
+        $sortable_columns = [
+            'title'  => ['title', false]
+        ];
+
+        return $sortable_columns;
+    }
 
     function prepare_items()
     {
+        $orderBy = filter_input(INPUT_GET, 'orderby');
+        $order = filter_input(INPUT_GET, 'order');
+        $quizes = get_quizes($orderBy, $order);
         $columns = $this->get_columns();
         $hidden = [];
-        $sortable = [];
+        $sortable = $this->get_sortable_columns();
         $this->_column_headers = [$columns, $hidden, $sortable];
-        $this->items = get_quizes();
+        $this->items = $quizes;
     }
 
     function column_default($item, $column_name)

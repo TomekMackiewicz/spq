@@ -16,12 +16,12 @@ function get_quiz($data)
     return $quiz;
 }
 
-function get_quizes() 
+function get_quizes($orderBy, $order) 
 {
     global $wpdb;
     
     $table_name = $wpdb->prefix."spq_quizes";    
-    $quizes = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
+    $quizes = $wpdb->get_results("SELECT * FROM $table_name ORDER BY $orderBy $order", ARRAY_A);
 
     if (empty($quizes)) {
         return null;
