@@ -16,12 +16,12 @@ function get_quiz($data)
     return $quiz;
 }
 
-function get_quizes($data) 
+function get_quizes() 
 {
     global $wpdb;
     
     $table_name = $wpdb->prefix."spq_quizes";    
-    $quizes = $wpdb->get_results("SELECT * FROM $table_name");
+    $quizes = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
 
     if (empty($quizes)) {
         return null;

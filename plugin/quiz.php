@@ -43,22 +43,22 @@ add_action('admin_head', 'append_base_href');
 add_action('admin_enqueue_scripts', 'add_angular_scripts');
 
 add_action('rest_api_init', function() {
-  register_rest_route('quiz/v1', '/quiz/(?P<id>\d+)', array(
-    'methods' => 'GET',
-    'callback' => 'get_quiz',
-  ));
-  register_rest_route('quiz/v1', '/quiz/', array(
-    'methods' => 'GET',
-    'callback' => 'get_quizes',
-  ));
-  register_rest_route('quiz/v1', '/quiz/', array(
-    'methods' => 'POST',
-    'callback' => 'post_quiz',
-  )); 
-  register_rest_route('quiz/v1', '/quiz/', array(
-    'methods' => 'PATCH',
-    'callback' => 'patch_quiz',
-  ));  
+    register_rest_route('quiz/v1', '/quiz/(?P<id>\d+)', [
+        'methods' => 'GET',
+        'callback' => 'get_quiz',
+    ]);
+    register_rest_route('quiz/v1', '/quiz/', [
+        'methods' => 'GET',
+        'callback' => 'get_quizes',
+    ]);
+    register_rest_route('quiz/v1', '/quiz/', [
+        'methods' => 'POST',
+        'callback' => 'post_quiz',
+    ]); 
+    register_rest_route('quiz/v1', '/quiz/', [
+        'methods' => 'PATCH',
+        'callback' => 'patch_quiz',
+    ]);  
 });
 
 
@@ -71,9 +71,9 @@ function spq_shortcode($atts) {
 
     //wp_register_script
     
-    $id = shortcode_atts(array(
+    $id = shortcode_atts([
         'id' => '1'
-    ), $atts);
+    ], $atts);
 
     return "id = {$id['id']}"; // should return angular output
 }
@@ -95,9 +95,9 @@ function add_angular_scripts($hook)
     wp_register_style('font-awesome', 'https://use.fontawesome.com/releases/v5.6.1/css/all.css');
     wp_enqueue_style('font-awesome');
     
-    wp_enqueue_script('runtime', plugin_dir_url(__FILE__).'dist/runtime.js', array(), null, true);
-    wp_enqueue_script('polyfills', plugin_dir_url(__FILE__).'dist/polyfills.js', array(), null, true);
-    wp_enqueue_script('main', plugin_dir_url(__FILE__).'dist/main.js', array(), null, true);
+    wp_enqueue_script('runtime', plugin_dir_url(__FILE__).'dist/runtime.js', [], null, true);
+    wp_enqueue_script('polyfills', plugin_dir_url(__FILE__).'dist/polyfills.js', [], null, true);
+    wp_enqueue_script('main', plugin_dir_url(__FILE__).'dist/main.js', [], null, true);
 }
 
 function append_base_href()
@@ -133,7 +133,7 @@ function quiz_plugin_options()
 
 function add_new_quiz()
 {
-    if (!current_user_can( 'manage_options'))  {
+    if (!current_user_can('manage_options'))  {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
     
@@ -142,9 +142,12 @@ function add_new_quiz()
 
 function list_of_quizes()
 {
-    if (!current_user_can( 'manage_options'))  {
+    if (!current_user_can('manage_options'))  {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
-
+    if (!class_exists('WP_List_Table')) {
+        require_once(ABSPATH.'includes/lib/class-wp-list-table.php');
+    }
+    
     require_once('includes/quizes_list.php');
 }
