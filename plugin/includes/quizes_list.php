@@ -5,6 +5,7 @@ class My_List_Table extends WP_List_Table
     function get_columns()
     {
         $columns = [
+            'cb' => '<input type="checkbox" />',
             'title' => 'Title',
             'description' => 'Description',
             'summary' => 'Summary',
@@ -25,8 +26,8 @@ class My_List_Table extends WP_List_Table
 
     function prepare_items()
     {
-        $orderBy = filter_input(INPUT_GET, 'orderby');
-        $order = filter_input(INPUT_GET, 'order');
+        $orderBy = $_GET['orderby'] ? filter_input(INPUT_GET, 'orderby') : 'title';
+        $order = $_GET['order'] ? filter_input(INPUT_GET, 'order') : 'asc';
         $quizes = get_quizes($orderBy, $order);
         $columns = $this->get_columns();
         $hidden = [];
@@ -47,19 +48,55 @@ class My_List_Table extends WP_List_Table
                 return print_r($item, true) ; //Show the whole array for troubleshooting purposes
         }
     }
+    
+    // Actions for single quiz
+    // TODO: implement edit / delete $_GET['action'], $_GET['quiz']
+    function column_title($item)
+    {
+        $actions = [
+            'edit' => sprintf('<a href="?page=%s&action=%s&quiz=%s">Edit</a>', $_REQUEST['page'], 'edit', $item['id']),
+            'delete' => sprintf('<a href="?page=%s&action=%s&quiz=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['id']),
+        ];
+
+        return sprintf('%1$s %2$s', $item['title'], $this->row_actions($actions) );
+    }
+    
+    // Bulk actions
+    // TODO: implement $_GET['action'], $_GET['quiz']
+    function get_bulk_actions()
+    {
+        $actions = [
+          'delete' => 'Delete'
+        ];
+
+        return $actions;
+    }
+
+    // Checkbox for bulk actions
+    function column_cb($item)
+    {
+        return sprintf(
+            '<input type="checkbox" name="quiz[]" value="%s" />', $item['id']
+        );
+    }
 }
 
 $myListTable = new My_List_Table();
+$myListTable->prepare_items();
 
 ?>
 
 <div class="wrap">
-<?php 
-    
-    echo "<h2>" . __('List of quizes', 'menu-test') . "</h2>";
-
-    $myListTable->prepare_items(); 
-    $myListTable->display(); 
-
-?>
+    <h2><?php echo __('List of quizes', 'menu-test') ?></h2>
+    <form id="events-filter" method="get">
+        <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+        <?php $myListTable->display(); ?>
+    </form>
 </div>
+
+
+<pre>
+<?php
+//var_dump($_GET);
+?>
+</pre>
