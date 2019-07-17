@@ -30,9 +30,12 @@ class My_List_Table extends WP_List_Table
         $order = $_GET['order'] ? filter_input(INPUT_GET, 'order') : 'asc';
         $perPage = 5;
         $currentPage = $this->get_pagenum();
-        $result = get_quizes($orderBy, $order, $perPage, $currentPage);
+        $search = filter_input(INPUT_POST, 's');
+        
+        $result = get_quizes($orderBy, $order, $perPage, $currentPage, $search);
         $quizes = $result['quizes'];
         $total_items = $result['count'];
+
         $columns = $this->get_columns();
         $hidden = [];
         $sortable = $this->get_sortable_columns();
@@ -98,9 +101,12 @@ $myListTable->prepare_items();
 
 <div class="wrap">
     <h2><?php echo __('List of quizes', 'menu-test') ?></h2>
+    <form method="post">
+        <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+        <?php $myListTable->search_box('search', 'search_id'); ?>
+    </form>
     <form id="events-filter" method="get">
         <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
-        <?php //$myListTable->search_box('search', 'search_id'); ?>
         <?php $myListTable->display(); ?>
     </form>
 </div>
@@ -108,6 +114,6 @@ $myListTable->prepare_items();
 
 <pre>
 <?php
-//var_dump($_GET);
+//var_dump($_POST['s']);
 ?>
 </pre>
