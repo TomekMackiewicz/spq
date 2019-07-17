@@ -16,18 +16,20 @@ function get_quiz($data)
     return $quiz;
 }
 
-function get_quizes($orderBy, $order) 
+function get_quizes($orderBy, $order, $perPage, $currentPage) 
 {
     global $wpdb;
-    
-    $table_name = $wpdb->prefix."spq_quizes";    
-    $quizes = $wpdb->get_results("SELECT * FROM $table_name ORDER BY $orderBy $order", ARRAY_A);
+
+    $offset = ($currentPage-1) * $perPage;
+    $table_name = $wpdb->prefix."spq_quizes";
+    $count = $wpdb->get_row("SELECT COUNT(id) AS count FROM $table_name", ARRAY_N);
+    $quizes = $wpdb->get_results("SELECT * FROM $table_name ORDER BY $orderBy $order LIMIT $perPage OFFSET $offset", ARRAY_A);
 
     if (empty($quizes)) {
         return null;
     }
  
-    return $quizes;
+    return ['quizes' => $quizes, 'count' => $count[0]];
 }
 
 function post_quiz($request)

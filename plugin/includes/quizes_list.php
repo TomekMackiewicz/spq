@@ -28,11 +28,21 @@ class My_List_Table extends WP_List_Table
     {
         $orderBy = $_GET['orderby'] ? filter_input(INPUT_GET, 'orderby') : 'title';
         $order = $_GET['order'] ? filter_input(INPUT_GET, 'order') : 'asc';
-        $quizes = get_quizes($orderBy, $order);
+        $perPage = 5;
+        $currentPage = $this->get_pagenum();
+        $result = get_quizes($orderBy, $order, $perPage, $currentPage);
+        $quizes = $result['quizes'];
+        $total_items = $result['count'];
         $columns = $this->get_columns();
         $hidden = [];
         $sortable = $this->get_sortable_columns();
         $this->_column_headers = [$columns, $hidden, $sortable];
+
+        $this->set_pagination_args([
+            'total_items' => $total_items,
+            'per_page' => $perPage
+        ]);
+
         $this->items = $quizes;
     }
 
@@ -90,6 +100,7 @@ $myListTable->prepare_items();
     <h2><?php echo __('List of quizes', 'menu-test') ?></h2>
     <form id="events-filter" method="get">
         <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+        <?php //$myListTable->search_box('search', 'search_id'); ?>
         <?php $myListTable->display(); ?>
     </form>
 </div>
