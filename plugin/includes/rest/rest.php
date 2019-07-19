@@ -22,10 +22,9 @@ function get_quizes($orderBy, $order, $perPage, $currentPage, $search)
 
     $offset = ($currentPage-1) * $perPage;
     $table_name = $wpdb->prefix."spq_quizes";
-    $count = $wpdb->get_row("SELECT COUNT(id) AS count FROM $table_name", ARRAY_N);
-    
     $where = $search ? "WHERE title LIKE '%$search%'" : '';
-    $quizes = $wpdb->get_results("SELECT * FROM $table_name ORDER BY $orderBy $order LIMIT $perPage OFFSET $offset $where", ARRAY_A);
+    $count = $wpdb->get_row("SELECT COUNT(id) AS count FROM $table_name $where", ARRAY_N);
+    $quizes = $wpdb->get_results("SELECT * FROM $table_name $where ORDER BY $orderBy $order LIMIT $perPage OFFSET $offset", ARRAY_A);
     
     if (empty($quizes)) {
         return null;
