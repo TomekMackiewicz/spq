@@ -121,10 +121,10 @@ function quiz_plugin_options()
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
  
-    $mt_submit_hidden = filter_input(INPUT_POST, 'mt_submit_hidden');    
+    $mt_submit_hidden = filter_input(INPUT_POST, 'mt_submit_hidden', FILTER_SANITIZE_STRING);    
 
     if(isset($mt_submit_hidden) && $mt_submit_hidden == 'Y') {
-        $opt_val = filter_input(INPUT_POST, 'spq_preserve_db_tables');
+        $opt_val = filter_input(INPUT_POST, 'spq_preserve_db_tables', FILTER_SANITIZE_STRING);
         update_option('spq_preserve_db_tables', $opt_val);
         
         require_once('includes/settings_alert.php');
