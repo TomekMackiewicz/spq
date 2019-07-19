@@ -61,8 +61,9 @@ add_action('rest_api_init', function() {
     ]);  
 });
 
-
 add_shortcode('spq', 'spq_shortcode');
+
+add_filter('set-screen-option', 'quiz_table_set_option', 10, 3);
 
 // [spq id="value"]
 function spq_shortcode($atts) {
@@ -110,7 +111,8 @@ function quiz_plugin_menu()
     add_menu_page( 'Quiz Plugin', 'Quiz Plugin', 'manage_options', 'quiz-plugin', 'quiz_plugin_options');
     add_submenu_page( 'quiz-plugin', 'Quiz Plugin Options', 'Quiz Plugin Options', 'manage_options', 'quiz-plugin-options', 'quiz_plugin_options');
     add_submenu_page( 'quiz-plugin', 'New Quiz', 'New Quiz', 'manage_options', 'new-quiz', 'add_new_quiz');
-    add_submenu_page( 'quiz-plugin', 'Quizes', 'Quizes', 'manage_options', 'quizes', 'list_of_quizes');
+    $hook = add_submenu_page( 'quiz-plugin', 'Quizes', 'Quizes', 'manage_options', 'quizes', 'list_of_quizes');
+    add_action( "load-$hook", 'add_options' );
 }
 
 function quiz_plugin_options() 
@@ -142,12 +144,37 @@ function add_new_quiz()
 
 function list_of_quizes()
 {
+    global $quizListTable;
+
     if (!current_user_can('manage_options'))  {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
-    if (!class_exists('WP_List_Table')) {
-        require_once(ABSPATH.'includes/lib/class-wp-list-table.php');
+    if (!class_exists('Quiz_List_Table')) {
+        require_once('includes/lib/quiz-list-table.php');
     }
-    
+    $quizListTable->prepare_items();
     require_once('includes/quizes_list.php');
+}
+
+function add_options() 
+{
+    global $quizListTable;
+    
+    if (!class_exists('Quiz_List_Table')) {
+        require_once('includes/lib/quiz-list-table.php');
+    }
+
+    $option = 'per_page';
+    $args = array(
+           'label' => 'Quizes',
+           'default' => 10,
+           'option' => 'quizes_per_page'
+           );
+    add_screen_option( $option, $args );
+
+    $quizListTable = new Quiz_List_Table;
+}
+
+function quiz_table_set_option($status, $option, $value) {
+    return $value;
 }
