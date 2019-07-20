@@ -28,8 +28,9 @@ class Quiz_List_Table extends WP_List_Table
 
     function prepare_items()
     {
-        $orderBy = $_GET['orderby'] ? filter_input(INPUT_GET, 'orderby', FILTER_SANITIZE_STRING) : 'title';
-        $order = $_GET['order'] ? filter_input(INPUT_GET, 'order', FILTER_SANITIZE_STRING) : 'asc';
+        $this->process_action(); // Edit / delete
+        $orderBy = isset($_GET['orderby']) ? filter_input(INPUT_GET, 'orderby', FILTER_SANITIZE_STRING) : 'title';
+        $order = isset($_GET['order']) ? filter_input(INPUT_GET, 'order', FILTER_SANITIZE_STRING) : 'asc';
         $perPage = $this->get_items_per_page('quizes_per_page', 5);
         $currentPage = $this->get_pagenum();
         $search = filter_input(INPUT_POST, 's', FILTER_SANITIZE_STRING);
@@ -46,8 +47,6 @@ class Quiz_List_Table extends WP_List_Table
         ]);
 
         $this->items = $quizes;
-        
-        $this->process_action();
     }
 
     function column_default($item, $column_name)

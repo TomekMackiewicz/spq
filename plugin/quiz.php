@@ -40,7 +40,7 @@ register_deactivation_hook(__FILE__, 'drop_tables');
 
 add_action('admin_menu', 'quiz_plugin_menu');
 add_action('admin_head', 'append_base_href');
-add_action('admin_enqueue_scripts', 'add_angular_scripts');
+add_action('admin_enqueue_scripts', 'add_scripts');
 
 add_action('rest_api_init', function() {
     register_rest_route('quiz/v1', '/quiz/(?P<id>\d+)', [
@@ -61,44 +61,45 @@ add_action('rest_api_init', function() {
     ]);  
 });
 
-add_shortcode('spq', 'spq_shortcode');
+//add_shortcode('spq', 'spq_shortcode');
 
 add_filter('set-screen-option', 'quiz_table_set_option', 10, 3);
 
 // [spq id="value"]
-function spq_shortcode($atts) {
-    add_action( 'wp_head', 'append_href' );
-    
-
-    //wp_register_script
-    
-    $id = shortcode_atts([
-        'id' => '1'
-    ], $atts);
-
-    return "id = {$id['id']}"; // should return angular output
-}
+//function spq_shortcode($atts) {
+//    add_action( 'wp_head', 'append_href' );
+//    
+//
+//    //wp_register_script
+//    
+//    $id = shortcode_atts([
+//        'id' => '1'
+//    ], $atts);
+//
+//    return "id = {$id['id']}"; // should return angular output
+//}
 
 function append_href()
 {
-    
     echo '<base href="/wp/wp-admin/admin.php?">';
 }
 
-function add_angular_scripts($hook) 
+function add_scripts($hook) 
 {
-//    if ('edit.php' != $hook) {
-//        return;
-//    }
-
     wp_register_style('spq-styles', plugin_dir_url(__FILE__).'dist/styles.css');
     wp_enqueue_style('spq-styles');    
     wp_register_style('font-awesome', 'https://use.fontawesome.com/releases/v5.6.1/css/all.css');
     wp_enqueue_style('font-awesome');
-    
-    wp_enqueue_script('runtime', plugin_dir_url(__FILE__).'dist/runtime.js', [], null, true);
-    wp_enqueue_script('polyfills', plugin_dir_url(__FILE__).'dist/polyfills.js', [], null, true);
-    wp_enqueue_script('main', plugin_dir_url(__FILE__).'dist/main.js', [], null, true);
+
+    if ('quiz-plugin_page_new-quiz' === $hook) {
+        wp_enqueue_script('runtime', plugin_dir_url(__FILE__).'dist/runtime.js', [], null, true);
+        wp_enqueue_script('polyfills', plugin_dir_url(__FILE__).'dist/polyfills.js', [], null, true);
+        wp_enqueue_script('main', plugin_dir_url(__FILE__).'dist/main.js', [], null, true);
+    }
+
+    if ('quiz-plugin_page_new-quiz' !== $hook) {
+        wp_enqueue_script('scripts', plugin_dir_url(__FILE__).'includes/js/scripts.js', [], null, true);
+    }
 }
 
 function append_base_href()
