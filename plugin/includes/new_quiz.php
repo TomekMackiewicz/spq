@@ -1,0 +1,281 @@
+<?php
+
+echo 'ok';
+?>
+
+<div class="wrap">
+    <h1>New quiz</h1>
+    <form name="spq_quiz_form" method="post" action="" class="spq-quiz-form">
+<!--        <input type="hidden" name="mt_submit_hidden" value="Y">-->
+        <p class="submit spq-form-submit">
+            <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" disabled />
+        </p>
+        <div id="spq-box-wrap">
+            <div class="spq-box-container-3">
+                <div class="spq-box">
+                    <h2>Basic info</h2>
+                    <div class="spq-inside">
+                        <div class="spq-input-wrap">
+                            <input name="title" type="text" class="spq-input spq_required_field" autocomplete="off" placeholder="Title" required>
+                            <div class="invalid-feedback">
+                                <div>Title is required</div>
+                            </div>
+                        </div>                     
+                        <div class="spq-input-wrap">
+                            <textarea name="description" class="spq-textarea" formControlName="description" placeholder="Description"></textarea>
+                        </div>                      
+                        <div class="spq-input-wrap">
+                            <textarea name="summary" class="spq-textarea" formControlName="summary" placeholder="Summary"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--            <div class="spq-box-container-3">
+                <div class="spq-box">
+                    <h2>Settings</h2>
+                    <div class="spq-inside">                     
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" placeholder="Duration">                                   
+                            <div>
+                                <div>Only numbers are allowed</div>
+                            </div>
+                        </div> 
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" placeholder="Gap between submissions">                                   
+                            <div class="invalid-feedback">
+                                <div>Only numbers are allowed</div>
+                            </div>
+                        </div> 
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" placeholder="Enter time active">                                  
+                            <div>
+                                <div>Only numbers are allowed</div>
+                            </div>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox">
+                            <label>Paginated?</label>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" placeholder="Questions per page">                                 
+                            <div>
+                                <div>Only numbers are allowed</div>
+                            </div> 
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox">
+                            <label>Shuffle questions?</label>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox">
+                            <label>Shuffle answers?</label>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox">
+                            <label>Immediate answers?</label>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox">
+                            <label>Restrict submissions?</label>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="text" class="spq-input" placeholder="Number of allowed submissions" formControlName="allowedSubmissions" 
+                                 [ngClass]="{ 'is-invalid': quizSubmitted && f.allowedSubmissions.errors }">                                
+                            <div *ngIf="quizSubmitted && f.allowedSubmissions.errors" class="invalid-feedback">
+                                <div *ngIf="f.allowedSubmissions.errors.pattern">Only numbers are allowed</div>
+                            </div> 
+                        </div>                        
+                    </div>                    
+                </div>
+            </div>-->
+<!--            <div class="spq-box-container-3" formGroupName="question">
+                <div class="spq-box">
+                    <h2>New question</h2>
+                    <div class="spq-inside">
+                        <div class="spq-input-wrap">
+                          <input type="text" class="spq-input" placeholder="Enter title" formControlName="label" 
+                                 [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.label').errors }" required>
+                          <div *ngIf="questionSubmitted && quizForm.get('question.label').errors" class="invalid-feedback">
+                              <div *ngIf="quizForm.get('question.label').errors.required">Title is required</div>
+                          </div>
+                        </div>
+                        <div class="spq-input-wrap">
+                          <textarea class="spq-textarea" formControlName="description" placeholder="Description"></textarea>
+                        </div>      
+                        <div class="spq-input-wrap">
+                          <select formControlName="type" [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.type').errors }">
+                            <option value="" disabled selected>Type</option>
+                            <option>radio</option>
+                            <option>multi</option>
+                            <option>sort</option>
+                            <option>range</option>
+                            <option>select</option>
+                          </select>
+                          <div *ngIf="questionSubmitted && quizForm.get('question.type').errors" class="invalid-feedback">
+                              <div *ngIf="quizForm.get('question.type').errors.required">Type is required</div>
+                          </div>        
+                        </div>
+                        <div class="spq-input-wrap">
+                          <textarea class="spq-textarea" formControlName="hint" placeholder="Hint"></textarea>
+                        </div>
+                        <div class="spq-input-wrap">
+                            <input type="checkbox" formControlName="isObligatory">
+                            <label>Obligatory?</label>
+                        </div>
+                        <button type="button" class="button button-primary" (click)="addQuestion()">Add question</button>                            
+                    </div>                    
+                </div>
+                <div class="spq-box">
+                    <h2>Answers</h2>
+                    <div class="spq-inside">
+                        <button type="button" class="button button-primary" (click)="addAnswer()">Add answer</button>
+                        <ul class="spq-list-group" formArrayName="answers">
+                            <li *ngFor="let answer of quizForm.get('question.answers')?.controls; let i = index;">
+                                <i *ngIf="!answerListState[i] || answerListState[i]==0; else answerChevronUp" 
+                                   class="fas fa-chevron-down spq-control-icon"                                     
+                                   [attr.data-target]="'#answerContent_' + i"
+                                   (click)="toogleAnswerChevron(i)">
+                                </i>
+                                <i class="fas fa-trash-alt spq-control-icon" (click)="deleteAnswer($event, i)"></i>
+                                <ng-template #answerChevronUp>
+                                  <i class="fas fa-chevron-up spq-control-icon" 
+                                    [attr.data-target]="'#answerContent_' + i"
+                                    (click)="toogleAnswerChevron(i)">
+                                  </i>
+                                </ng-template>
+                                <div class="spq-collapse" [ngClass]="{ 'spq-show': answerListState[i]==1 }">               
+                                    <div [formGroupName]="i">
+                                        <div class="spq-input-wrap">
+                                            <input type="text" class="spq-input" formControlName="label" placeholder="Answer" 
+                                                   [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.label.errors }" required>
+                                            <div *ngIf="questionSubmitted && answer?.controls.label.errors" class="invalid-feedback">
+                                                <div *ngIf="answer?.controls.label.errors.required">Title is required</div>
+                                            </div>            
+                                        </div>
+                                        <div class="spq-input-wrap">
+                                            <input type="checkbox" formControlName="isCorrect">
+                                            <label>Correct answer</label>
+                                        </div>     
+                                        <div class="spq-input-wrap">
+                                            <textarea class="spq-textarea" formControlName="message" placeholder="Message"></textarea>
+                                        </div>
+                                          <div class="spq-input-wrap">
+                                            <input type="text" class="spq-input" placeholder="Points" formControlName="points" 
+                                                   [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.points.errors }">
+                                            <div *ngIf="questionSubmitted && answer?.controls.points.errors" class="invalid-feedback">
+                                                <div *ngIf="answer?.controls.points.errors.pattern">Only numbers are allowed</div>
+                                            </div>               
+                                          </div>                                                  
+                                    </div>                                   
+                                </div>
+                            </li>
+                        </ul>      
+                    </div>
+                </div>                
+            </div>-->
+<!--            <div class="spq-box-container-3">
+                <div class="spq-box">
+                    <h2>List of questions</h2>
+                    <div class="spq-inside">
+                        <ul
+                          cdkDropList
+                          #questionsList="cdkDropList"
+                          [cdkDropListData]="questions"
+                          [cdkDropListConnectedTo]="[tmpQuestionsList]"
+                          class="spq-list-group"
+                          (cdkDropListDropped)="drop($event)">
+
+                          <li *ngIf="questions.length==0">
+                            <div class="spq-placeholder"></div>
+                            
+                          </li>
+
+                          <li *ngFor="let question of questions; let i = index" cdkDrag>
+                            <div class="spq-placeholder" *cdkDragPlaceholder></div>
+                            <span class="spq-badge">{{ i+1 }}</span>                           
+                            {{ question.label }}
+                            <i class="fas fa-arrows-alt spq-control-icon" cdkDragHandle></i> 
+                            <i class="fas fa-trash-alt spq-control-icon" (click)="deleteQuestion($event, 'questions', i)"></i>
+                            <i class="far fa-clone spq-control-icon" (click)="cloneQuestion($event, question)"></i>
+                            <i class="fas fa-cogs spq-control-icon" (click)="edit($event, question)"></i>
+                            <i *ngIf="!listState[i] || listState[i]==0; else chevronUp" 
+                               class="fas fa-chevron-down spq-control-icon" 
+                               [attr.data-target]="'#questionContent_' + i"
+                               (click)="toogleQuestionChevron(i)">
+                            </i>
+                            <ng-template #chevronUp>
+                              <i class="fas fa-chevron-up spq-control-icon" 
+                                [attr.data-target]="'#questionContent_' + i"
+                                (click)="toogleQuestionChevron(i)">
+                              </i>
+                            </ng-template>
+                            <div class="spq-placeholder" *cdkDragPlaceholder></div>
+                            <div class="spq-collapse" [ngClass]="{ 'spq-show': listState[i]==1 }">
+                                <p>Desc: {{ question.description }}</p>
+                                <p>Hint: {{ question.hint }}</p>
+                                <p>Type: {{ question.type }}</p>
+                                <p>Obligatory: {{ question.isObligatory }}</p>
+                                <p>Answers:</p>
+                                <div *ngFor="let answer of question.answers">
+                                    <p>Title: {{ answer.label }}</p>
+                                    <p>Correct: {{ answer.isCorrect }}</p>
+                                    <p>Message: {{ answer.message }}</p>
+                                    <p>Points: {{ answer.points }}</p>
+                                </div>
+                            </div>
+                          </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="spq-box">
+                    <h2>Temp questions</h2>
+                    <div class="spq-inside">
+                        <ul
+                          cdkDropList
+                          #tmpQuestionsList="cdkDropList"
+                          [cdkDropListData]="tmpQuestions"
+                          [cdkDropListConnectedTo]="[questionsList]"
+                          class="spq-list-group"
+                          (cdkDropListDropped)="drop($event)">
+
+                          <li *ngIf="tmpQuestions.length==0">
+                            <div class="spq-placeholder"></div>
+                          </li>
+
+                          <li *ngFor="let question of tmpQuestions; let i = index" cdkDrag>
+                            <div class="spq-placeholder" *cdkDragPlaceholder></div>
+                            <span class="spq-badge">{{ i+1 }}</span>
+                            
+                            {{ question.label }}
+                            <i class="fas fa-arrows-alt spq-control-icon" cdkDragHandle></i>       
+                            <i class="fas fa-trash-alt spq-control-icon" (click)="deleteQuestion($event, 'tmpQuestions', i)"></i>
+                          </li>
+                        </ul>                        
+                    </div>
+                </div>
+            </div>-->
+<!--        </div>
+    </form>
+</div>-->
+
+<!--//    $data = [
+//        'title'=>$request['quiz']['title'], 
+//        'description'=>$request['quiz']['description'],
+//        'summary'=>$request['quiz']['summary'],
+//        'duration'=>$request['quiz']['duration'],
+//        'next_submission_after'=>$request['quiz']['nextSubmissionAfter'],
+//        'time_active'=>$request['quiz']['timeActive'],
+//        'paginated'=>$request['quiz']['paginated'],
+//        'per_page'=>$request['quiz']['perPage'],
+//        //'marks_type'=>$request['quiz']['marks_type'],
+//        'shuffle_questions'=>$request['quiz']['shuffleQuestions'],
+//        'shuffle_answers'=>$request['quiz']['shuffleAnswers'],
+//        'immediate_answers'=>$request['quiz']['immediateAnswers'],
+//        'restrict_submissions'=>$request['quiz']['restrictSubmissions'],
+//        'allowed_submissions'=>$request['quiz']['allowedSubmissions'],
+//        'questions' => serialize($request['quiz']['questions']),
+//        'date_created' => date('Y-m-d H:i:s', time())
+//    ];-->

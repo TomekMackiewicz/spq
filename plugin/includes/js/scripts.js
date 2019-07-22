@@ -34,7 +34,7 @@ jQuery(document).ready(function() {
         jQuery.ajax({
             url         : 'http://localhost/wp/wp-json/quiz/v1/quiz/',
             method      : 'post',
-            contentType : 'application/json',
+            contentType : 'application/json; charset=UTF-8',
             dataType    : 'json',
             data        : data
         })

@@ -42,27 +42,15 @@ function get_quizes($orderBy, $order, $perPage, $currentPage, $search)
 function post_quiz($request)
 {
     global $wpdb;
-   
-    $data = [
-        'title'=>$request['quiz']['title'], 
-        'description'=>$request['quiz']['description'],
-        'summary'=>$request['quiz']['summary'],
-        'duration'=>$request['quiz']['duration'],
-        'next_submission_after'=>$request['quiz']['nextSubmissionAfter'],
-        'time_active'=>$request['quiz']['timeActive'],
-        'paginated'=>$request['quiz']['paginated'],
-        'per_page'=>$request['quiz']['perPage'],
-        //'marks_type'=>$request['quiz']['marks_type'],
-        'shuffle_questions'=>$request['quiz']['shuffleQuestions'],
-        'shuffle_answers'=>$request['quiz']['shuffleAnswers'],
-        'immediate_answers'=>$request['quiz']['immediateAnswers'],
-        'restrict_submissions'=>$request['quiz']['restrictSubmissions'],
-        'allowed_submissions'=>$request['quiz']['allowedSubmissions'],
-        'questions' => serialize($request['quiz']['questions']),
-        'date_created' => date('Y-m-d H:i:s', time())
-    ];
     
-    //$table_name = $wpdb->prefix."spq_quizes";     
+    $params = $request->get_params();
+    $data = [];
+    
+    foreach ($params as $param) {
+        $data[$param['name']] = $param['value'];
+    }
+    $data['date_created'] = date('Y-m-d H:i:s', time());
+
     $success = $wpdb->insert($wpdb->prefix."spq_quizes", $data);
 
     if (!$success) {
