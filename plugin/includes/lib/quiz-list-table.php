@@ -70,7 +70,7 @@ class Quiz_List_Table extends WP_List_Table
         $actions = [
             'edit' => sprintf(
                 '<a href="?page=%s&action=%s&quiz=%s">Edit</a>', 
-                $page, 'edit', $item['id']
+                'new-quiz', 'edit', $item['id']
             ),
             'delete' => sprintf(
                 '<a href="?page=%s&action=%s&quiz=%s">Delete</a>', 
