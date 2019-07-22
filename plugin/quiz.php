@@ -9,7 +9,7 @@ Author:       Tomasz Mackiewicz
 Author URI:   https://author.example.com/
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-3.0.html
-Text Domain:  wporg
+Text Domain:  spq
 Domain Path:  /languages
 
 S.P.Q is free software: you can redistribute it and/or modify
@@ -65,18 +65,30 @@ add_shortcode('spq', 'spq_shortcode');
 
 add_filter('set-screen-option', 'quiz_table_set_option', 10, 3);
 
-// [spq id="value"]
 function spq_shortcode($atts) {
     add_action( 'wp_head', 'append_href' );
+    wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js', [], null, true);
+    wp_enqueue_script('spq', plugin_dir_url(__FILE__).'includes/scripts/spq.js', [], null, true);
     
-
-    //wp_register_script
+    $keys = array_keys($atts);
+    if (count($keys) !== 1) {
+        wp_die(__('Invalid number of shortcode attributes.'));
+    }
+    if ($keys[0] !== 'id') {
+        wp_die(__('Invalid shortcode attribute name.'));
+    }
+    if (!is_numeric($atts['id'])) {
+        wp_die(__('Only numeric values are allowed.'));
+    }
     
-    $id = shortcode_atts([
-        'id' => '1'
-    ], $atts);
+    $quiz = get_quiz($atts['id']);
+    
+    if (!$quiz) {
+        return __('No quiz for given ID.');
+    }
 
-    return "id = {$id['id']}"; // should return angular output
+    require_once('includes/lib/QuizForm.php');
+    require_once('includes/quiz_front.php');
 }
 
 function append_href()
