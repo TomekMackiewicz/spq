@@ -1,11 +1,11 @@
 <?php
 
-function get_quiz($data) 
+function get_quiz($id) 
 {
     global $wpdb;
     
     $table_name = $wpdb->prefix."spq_quizes";    
-    $quiz = $wpdb->get_row("SELECT * FROM $table_name WHERE id=".$data['id']);
+    $quiz = $wpdb->get_row("SELECT * FROM $table_name WHERE id=".$id);
 
     if (empty($quiz)) {
         return null;

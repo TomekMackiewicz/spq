@@ -62,6 +62,32 @@ add_action('rest_api_init', function() {
 
 add_filter('set-screen-option', 'quiz_table_set_option', 10, 3);
 
+function spq_shortcode($atts) {
+    add_action( 'wp_head', 'append_href' );
+    wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js', [], null, true);
+    wp_enqueue_script('spq', plugin_dir_url(__FILE__).'includes/scripts/spq.js', [], null, true);
+    
+    $keys = array_keys($atts);
+    if (count($keys) !== 1) {
+        wp_die(__('Invalid number of shortcode attributes.'));
+    }
+    if ($keys[0] !== 'id') {
+        wp_die(__('Invalid shortcode attribute name.'));
+    }
+    if (!is_numeric($atts['id'])) {
+        wp_die(__('Only numeric values are allowed.'));
+    }
+    
+    $quiz = get_quiz($atts['id']);
+    
+    if (!$quiz) {
+        return __('No quiz for given ID.');
+    }
+
+    require_once('includes/lib/QuizForm.php');
+    require_once('includes/quiz_front.php');
+}
+
 function add_scripts($hook) 
 {
     wp_register_style('spq-styles', plugin_dir_url(__FILE__).'includes/css/styles.css');
