@@ -6,7 +6,6 @@ echo 'ok';
 <div class="wrap">
     <h1>New quiz</h1>
     <form name="spq_quiz_form" method="post" action="" class="spq-quiz-form">
-<!--        <input type="hidden" name="mt_submit_hidden" value="Y">-->
         <p class="submit spq-form-submit">
             <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" disabled />
         </p>
@@ -16,7 +15,7 @@ echo 'ok';
                     <h2>Basic info</h2>
                     <div class="spq-inside">
                         <div class="spq-input-wrap">
-                            <input name="title" type="text" class="spq-input spq_required_field" autocomplete="off" placeholder="Title" required>
+                            <input name="title" type="text" class="spq-input spq-required-field" autocomplete="off" placeholder="Title" required>
                             <div class="invalid-feedback">
                                 <div>Title is required</div>
                             </div>
@@ -30,67 +29,67 @@ echo 'ok';
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
-<!--            <div class="spq-box-container-3">
+            <div class="spq-box-container-3">
                 <div class="spq-box">
                     <h2>Settings</h2>
                     <div class="spq-inside">                     
                         <div class="spq-input-wrap">
-                            <input type="text" class="spq-input" placeholder="Duration">                                   
-                            <div>
-                                <div>Only numbers are allowed</div>
-                            </div>
-                        </div> 
-                        <div class="spq-input-wrap">
-                            <input type="text" class="spq-input" placeholder="Gap between submissions">                                   
+                            <input name="duration" type="text" class="spq-input spq-regex-integer" placeholder="Duration">                                   
                             <div class="invalid-feedback">
                                 <div>Only numbers are allowed</div>
                             </div>
                         </div> 
                         <div class="spq-input-wrap">
-                            <input type="text" class="spq-input" placeholder="Enter time active">                                  
-                            <div>
+                            <input name="next_submission_after" type="text" class="spq-input spq-regex-integer" placeholder="Gap between submissions">                                   
+                            <div class="invalid-feedback">
+                                <div>Only numbers are allowed</div>
+                            </div>
+                        </div> 
+                        <div class="spq-input-wrap">
+                            <input name="time_active" type="text" class="spq-input spq-regex-integer" placeholder="Enter time active">                                  
+                            <div class="invalid-feedback">
                                 <div>Only numbers are allowed</div>
                             </div>
                         </div>
                         <div class="spq-input-wrap">
-                            <input type="checkbox">
+                            <input name="paginated" type="checkbox">
                             <label>Paginated?</label>
                         </div>
                         <div class="spq-input-wrap">
-                            <input type="text" class="spq-input" placeholder="Questions per page">                                 
-                            <div>
+                            <input name="per_page" type="text" class="spq-input spq-regex-integer" placeholder="Questions per page">                                 
+                            <div class="invalid-feedback">
                                 <div>Only numbers are allowed</div>
                             </div> 
                         </div>
                         <div class="spq-input-wrap">
-                            <input type="checkbox">
+                            <input name="shuffle_questions" type="checkbox">
                             <label>Shuffle questions?</label>
                         </div>
                         <div class="spq-input-wrap">
-                            <input type="checkbox">
+                            <input name="shuffle_answers" type="checkbox">
                             <label>Shuffle answers?</label>
                         </div>
                         <div class="spq-input-wrap">
-                            <input type="checkbox">
+                            <input name="immediate_answers" type="checkbox">
                             <label>Immediate answers?</label>
                         </div>
                         <div class="spq-input-wrap">
-                            <input type="checkbox">
+                            <input name="restrict_submissions" type="checkbox">
                             <label>Restrict submissions?</label>
                         </div>
                         <div class="spq-input-wrap">
-                            <input type="text" class="spq-input" placeholder="Number of allowed submissions" formControlName="allowedSubmissions" 
-                                 [ngClass]="{ 'is-invalid': quizSubmitted && f.allowedSubmissions.errors }">                                
-                            <div *ngIf="quizSubmitted && f.allowedSubmissions.errors" class="invalid-feedback">
-                                <div *ngIf="f.allowedSubmissions.errors.pattern">Only numbers are allowed</div>
+                            <input name="allowed_submissions" type="text" class="spq-input spq-regex-integer" placeholder="Number of allowed submissions">                                
+                            <div class="invalid-feedback">
+                                <div>Only numbers are allowed</div>
                             </div> 
                         </div>                        
                     </div>                    
                 </div>
-            </div>-->
+            </div>            
+        </div>
+    </form>
+</div>
+
 <!--            <div class="spq-box-container-3" formGroupName="question">
                 <div class="spq-box">
                     <h2>New question</h2>
@@ -260,22 +259,3 @@ echo 'ok';
 <!--        </div>
     </form>
 </div>-->
-
-<!--//    $data = [
-//        'title'=>$request['quiz']['title'], 
-//        'description'=>$request['quiz']['description'],
-//        'summary'=>$request['quiz']['summary'],
-//        'duration'=>$request['quiz']['duration'],
-//        'next_submission_after'=>$request['quiz']['nextSubmissionAfter'],
-//        'time_active'=>$request['quiz']['timeActive'],
-//        'paginated'=>$request['quiz']['paginated'],
-//        'per_page'=>$request['quiz']['perPage'],
-//        //'marks_type'=>$request['quiz']['marks_type'],
-//        'shuffle_questions'=>$request['quiz']['shuffleQuestions'],
-//        'shuffle_answers'=>$request['quiz']['shuffleAnswers'],
-//        'immediate_answers'=>$request['quiz']['immediateAnswers'],
-//        'restrict_submissions'=>$request['quiz']['restrictSubmissions'],
-//        'allowed_submissions'=>$request['quiz']['allowedSubmissions'],
-//        'questions' => serialize($request['quiz']['questions']),
-//        'date_created' => date('Y-m-d H:i:s', time())
-//    ];-->

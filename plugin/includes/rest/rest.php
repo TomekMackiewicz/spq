@@ -42,7 +42,7 @@ function get_quizes($orderBy, $order, $perPage, $currentPage, $search)
 function post_quiz($request)
 {
     global $wpdb;
-    
+
     $params = $request->get_params();
     $data = [];
     
@@ -57,7 +57,7 @@ function post_quiz($request)
         return new WP_REST_Response('Error during save! Server said: '.$wpdb->last_error);       
     }
     
-    return new WP_REST_Response(['id'=>$wpdb->insert_id, 'message'=>'Quiz saved']);    
+    return new WP_REST_Response('Quiz saved');    
 }
 
 function patch_quiz($request)

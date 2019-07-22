@@ -1,7 +1,8 @@
 jQuery(document).ready(function() {
     
-    // Hide required warning on startup
-    jQuery('.spq_required_field').next().hide();
+    // Hide required / regex warning on startup
+    jQuery('.spq-required-field').next().hide();
+    jQuery('.spq-regex-integer').next().hide();
 
     // Confirm delete
     jQuery('.delete').click(function(event) {
@@ -16,13 +17,22 @@ jQuery(document).ready(function() {
     });
     
     // Toogle required warning
-    jQuery('.spq_required_field').on('input', function() {
+    jQuery('.spq-required-field').on('input', function() {
         var input = jQuery(this);
-        var is_name = input.val();
-        if(is_name) {
+        if (input.val()) {
             input.next().hide();
         } else{
             input.next().show();
+        }
+    });
+
+    // Toogle regex against integers warning
+    jQuery('.spq-regex-integer').on('input', function() {
+        var input = jQuery(this);
+        if (input.val().match(/[^0-9]/g, '')) {
+            input.next().show();
+        } else{
+            input.next().hide();
         }
     });
     
@@ -38,16 +48,11 @@ jQuery(document).ready(function() {
             dataType    : 'json',
             data        : data
         })
-        .done(function(res) {
-            console.log('done');
-            console.log(res);
+        .done(function(response) {
+            jQuery('#wpbody-content').prepend('<div class="notice notice-success is-dismissible"><p>'+response+'</p></div>');
         })
-        .fail(function(res) {
-            console.log('fail');
-            console.log(res);
-        })
-        .always(function() {
-            console.log('always');
+        .fail(function(response) {
+            jQuery('#wpbody-content').prepend(response.responseText);
         });        
     });
 
