@@ -1,4 +1,6 @@
 jQuery(document).ready(function() {
+    
+    var questions = [];
 
 //------------------------------------------------------------------------------
 // QUIZ FORM
@@ -44,7 +46,35 @@ jQuery(document).ready(function() {
     jQuery('#spq-paginate').click(function() {
         jQuery("#spq-questions-per-page").toggle(this.checked);
     });
+
+    // Add question
+    jQuery( "#spq-add-question" ).click(function() {
+        var question_title = jQuery('#spq-question-title').val();
+        var question_description = jQuery('#spq-question-description').val();
+        var question_type = jQuery('#spq-question-type').val();
+        var question_hint = jQuery('#spq-question-hint').val();
+        var question_obligatory = jQuery('#spq-question-obligatory').val();
+
+        var question = {
+            title: question_title,
+            description: question_description,
+            type: question_type,
+            hint: question_hint,
+            obligatory: question_obligatory
+        };
+
+        jQuery('#spq-preview').append('<h3>'+question.title+'</h3>');
+        jQuery('#spq-preview').append('<div>'+question.description+'</div>');
+        jQuery('#spq-preview').accordion('refresh');
+        
+        questions.push(question);
+        console.log(questions);
+    });
     
+    jQuery(function() {
+        jQuery("#spq-preview").accordion();
+    });
+
 //------------------------------------------------------------------------------
 // SAVE QUIZ
 // -----------------------------------------------------------------------------

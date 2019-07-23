@@ -11,10 +11,8 @@
                     <div class="spq-inside">
                         <div class="spq-input-wrap">
                             <input name="title" type="text" class="spq-input spq-required-field" autocomplete="off" placeholder="Title" required>
-                            <div class="invalid-feedback">
-                                <div>Title is required</div>
-                            </div>
-                        </div>                     
+                            <div class="spq-invalid-feedback">Title is required</div>
+                        </div>
                         <div class="spq-input-wrap">
                             <textarea name="description" class="spq-textarea" formControlName="description" placeholder="Description"></textarea>
                         </div>                      
@@ -23,28 +21,20 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="spq-box-container-3">
                 <div class="spq-box">
                     <h2>Settings</h2>
                     <div class="spq-inside">                     
                         <div class="spq-input-wrap">
                             <input name="duration" type="text" class="spq-input spq-regex-integer" placeholder="Duration">                                   
-                            <div class="invalid-feedback">
-                                <div>Only numbers are allowed</div>
-                            </div>
+                            <div class="spq-invalid-feedback">Only numbers are allowed</div>
                         </div> 
                         <div class="spq-input-wrap">
                             <input name="next_submission_after" type="text" class="spq-input spq-regex-integer" placeholder="Gap between submissions">                                   
-                            <div class="invalid-feedback">
-                                <div>Only numbers are allowed</div>
-                            </div>
+                            <div class="spq-invalid-feedback">Only numbers are allowed</div>
                         </div> 
                         <div class="spq-input-wrap">
                             <input name="time_active" type="text" class="spq-input spq-regex-integer" placeholder="Enter time active">                                  
-                            <div class="invalid-feedback">
-                                <div>Only numbers are allowed</div>
-                            </div>
+                            <div class="spq-invalid-feedback">Only numbers are allowed</div>
                         </div>
                         <div class="spq-input-wrap">
                             <input name="paginated" type="checkbox" id="spq-paginate">
@@ -52,9 +42,7 @@
                         </div>
                         <div class="spq-input-wrap">
                             <input name="per_page" type="text" id="spq-questions-per-page" class="spq-input spq-regex-integer" placeholder="Questions per page">                                 
-                            <div class="invalid-feedback">
-                                <div>Only numbers are allowed</div>
-                            </div> 
+                            <div class="spq-invalid-feedback">Only numbers are allowed</div>
                         </div>
                         <div class="spq-input-wrap">
                             <input name="shuffle_questions" type="checkbox">
@@ -74,93 +62,75 @@
                         </div>
                         <div class="spq-input-wrap">
                             <input name="allowed_submissions" type="text" class="spq-input spq-regex-integer" placeholder="Number of allowed submissions">                                
-                            <div class="invalid-feedback">
-                                <div>Only numbers are allowed</div>
-                            </div> 
+                            <div class="spq-invalid-feedback">Only numbers are allowed</div>
                         </div>                        
                     </div>                    
                 </div>
-            </div>            
-        </div>
-    </form>
-</div>
-
-<!--            <div class="spq-box-container-3" formGroupName="question">
+            </div>
+            <div class="spq-box-container-3">
                 <div class="spq-box">
                     <h2>New question</h2>
-                    <div class="spq-inside">
+                    <div id="spq-question-form" class="spq-inside">
                         <div class="spq-input-wrap">
-                          <input type="text" class="spq-input" placeholder="Enter title" formControlName="label" 
-                                 [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.label').errors }" required>
-                          <div *ngIf="questionSubmitted && quizForm.get('question.label').errors" class="invalid-feedback">
-                              <div *ngIf="quizForm.get('question.label').errors.required">Title is required</div>
-                          </div>
+                          <input id="spq-question-title" type="text" class="spq-input spq-required-field" placeholder="Enter title" required>
+                          <div class="spq-invalid-feedback">Title is required</div>
                         </div>
                         <div class="spq-input-wrap">
-                          <textarea class="spq-textarea" formControlName="description" placeholder="Description"></textarea>
+                          <textarea id="spq-question-description" class="spq-textarea" placeholder="Description"></textarea>
                         </div>      
                         <div class="spq-input-wrap">
-                          <select formControlName="type" [ngClass]="{ 'is-invalid': questionSubmitted && quizForm.get('question.type').errors }">
+                          <select id="spq-question-type" class="spq-required-field">
                             <option value="" disabled selected>Type</option>
-                            <option>radio</option>
-                            <option>multi</option>
-                            <option>sort</option>
-                            <option>range</option>
-                            <option>select</option>
+                            <option value="radio">radio</option>
+                            <option value="multi">multi</option>
+                            <option value="sort">sort</option>
+                            <option value="range">range</option>
+                            <option value="select">select</option>
                           </select>
-                          <div *ngIf="questionSubmitted && quizForm.get('question.type').errors" class="invalid-feedback">
-                              <div *ngIf="quizForm.get('question.type').errors.required">Type is required</div>
-                          </div>        
+                          <div class="spq-invalid-feedback">Type is required</div>
                         </div>
                         <div class="spq-input-wrap">
-                          <textarea class="spq-textarea" formControlName="hint" placeholder="Hint"></textarea>
+                          <textarea id="spq-question-hint" class="spq-textarea" placeholder="Hint"></textarea>
                         </div>
                         <div class="spq-input-wrap">
-                            <input type="checkbox" formControlName="isObligatory">
+                            <input id="spq-question-obligatory" type="checkbox">
                             <label>Obligatory?</label>
                         </div>
-                        <button type="button" class="button button-primary" (click)="addQuestion()">Add question</button>                            
-                    </div>                    
-                </div>
-                <div class="spq-box">
+                        <button type="button" id="spq-add-question" class="button button-primary">Add question</button>                            
+                    </div>
+                </div> 
+<!--                <div class="spq-box">
                     <h2>Answers</h2>
                     <div class="spq-inside">
-                        <button type="button" class="button button-primary" (click)="addAnswer()">Add answer</button>
-                        <ul class="spq-list-group" formArrayName="answers">
-                            <li *ngFor="let answer of quizForm.get('question.answers')?.controls; let i = index;">
-                                <i *ngIf="!answerListState[i] || answerListState[i]==0; else answerChevronUp" 
-                                   class="fas fa-chevron-down spq-control-icon"                                     
-                                   [attr.data-target]="'#answerContent_' + i"
-                                   (click)="toogleAnswerChevron(i)">
+                        <button type="button" class="button button-primary">Add answer</button>
+                        <ul class="spq-list-group">
+                            <li>
+                                <i class="fas fa-chevron-down spq-control-icon">
                                 </i>
-                                <i class="fas fa-trash-alt spq-control-icon" (click)="deleteAnswer($event, i)"></i>
-                                <ng-template #answerChevronUp>
-                                  <i class="fas fa-chevron-up spq-control-icon" 
-                                    [attr.data-target]="'#answerContent_' + i"
-                                    (click)="toogleAnswerChevron(i)">
+                                <i class="fas fa-trash-alt spq-control-icon"></i>
+                                <ng-template>
+                                  <i class="fas fa-chevron-up spq-control-icon">
                                   </i>
                                 </ng-template>
-                                <div class="spq-collapse" [ngClass]="{ 'spq-show': answerListState[i]==1 }">               
-                                    <div [formGroupName]="i">
+                                <div class="spq-collapse">               
+                                    <div>
                                         <div class="spq-input-wrap">
-                                            <input type="text" class="spq-input" formControlName="label" placeholder="Answer" 
-                                                   [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.label.errors }" required>
-                                            <div *ngIf="questionSubmitted && answer?.controls.label.errors" class="invalid-feedback">
-                                                <div *ngIf="answer?.controls.label.errors.required">Title is required</div>
+                                            <input type="text" class="spq-input" placeholder="Answer" required>
+                                            <div>
+                                                <div>Title is required</div>
                                             </div>            
                                         </div>
                                         <div class="spq-input-wrap">
-                                            <input type="checkbox" formControlName="isCorrect">
+                                            <input type="checkbox">
                                             <label>Correct answer</label>
                                         </div>     
                                         <div class="spq-input-wrap">
-                                            <textarea class="spq-textarea" formControlName="message" placeholder="Message"></textarea>
+                                            <textarea class="spq-textarea" placeholder="Message"></textarea>
                                         </div>
                                           <div class="spq-input-wrap">
-                                            <input type="text" class="spq-input" placeholder="Points" formControlName="points" 
-                                                   [ngClass]="{ 'is-invalid': questionSubmitted && answer?.controls.points.errors }">
-                                            <div *ngIf="questionSubmitted && answer?.controls.points.errors" class="invalid-feedback">
-                                                <div *ngIf="answer?.controls.points.errors.pattern">Only numbers are allowed</div>
+                                            <input type="text" class="spq-input" placeholder="Points">
+                                            <div>
+                                                <div>Only numbers are allowed</div>
                                             </div>               
                                           </div>                                                  
                                     </div>                                   
@@ -168,8 +138,20 @@
                             </li>
                         </ul>      
                     </div>
-                </div>                
-            </div>-->
+                </div>-->
+            </div>
+            <div class="spq-box-container-6">
+                <div class="spq-box">
+                    <h2>Preview</h2>
+                    <div class="spq-inside">
+                        <div id="spq-preview"></div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </form>
+</div>
+
 <!--            <div class="spq-box-container-3">
                 <div class="spq-box">
                     <h2>List of questions</h2>

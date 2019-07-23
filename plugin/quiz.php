@@ -90,10 +90,14 @@ function spq_shortcode($atts) {
 
 function add_scripts($hook) 
 {
+    wp_register_style('jquery-ui', plugin_dir_url(__FILE__).'includes/css/jquery-ui.min.css');
+    wp_enqueue_style('jquery-ui');
     wp_register_style('spq-styles', plugin_dir_url(__FILE__).'includes/css/styles.css');
     wp_enqueue_style('spq-styles');    
     wp_register_style('font-awesome', 'https://use.fontawesome.com/releases/v5.6.1/css/all.css');
     wp_enqueue_style('font-awesome');
+    wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js', [], null, true);
+    wp_enqueue_script('ui', plugin_dir_url(__FILE__).'includes/js/jquery-ui.min.js', [], null, true);
     wp_enqueue_script('admin', plugin_dir_url(__FILE__).'includes/js/admin.js', [], null, true);
 }
 

@@ -72,7 +72,7 @@
     box-sizing: border-box;
 }
 
-.invalid-feedback {
+.spq-invalid-feedback {
     color: red;
     margin: 0 0 8px 0;
 }
