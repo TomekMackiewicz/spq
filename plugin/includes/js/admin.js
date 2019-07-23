@@ -61,7 +61,7 @@ jQuery(document).ready(function() {
                 var lis = jQuery(this).children('li');
                 lis.each(function() {
                     var newVal = jQuery(this).index() + 1;
-                    jQuery(this).children().children('.sortable-number').html(newVal);
+                    jQuery(this).children().children('.spq-sortable-number').html(newVal);
                 });
             }
         });
@@ -75,6 +75,12 @@ jQuery(document).ready(function() {
         var question_type = jQuery('#spq-question-type').val();
         var question_hint = jQuery('#spq-question-hint').val();
         var question_obligatory = jQuery('#spq-question-obligatory').val();
+        
+        jQuery('#spq-question-title').val('');
+        jQuery('#spq-question-description').val('');
+        jQuery('#spq-question-type').val('');
+        jQuery('#spq-question-hint').val('');
+        jQuery('#spq-question-obligatory').val('');
 
         var question = {
             id: jQuery("#spq-preview li").length+1,
@@ -85,12 +91,13 @@ jQuery(document).ready(function() {
             obligatory: question_obligatory
         };
         
-        var questionHtml = '<li class="draggable">';
-        questionHtml += '<h3><span class="sortable-number">'+question.id+'</span> '+question.title;
+        var questionHtml = '<li class="draggable" data-type="'+question.type+'" data-obligatory="'+question.obligatory+'">';
+        questionHtml += '<h3><span class="spq-sortable-number">'+question.id+'</span><span class="spq-question-title">'+question.title+'</span>';
         questionHtml += '<span id="spq-qe_'+question.id+'" class="spq-control-icon spq-edit-icon"><i class="fas fa-cogs"></i></span>';
         questionHtml += '<span id="spq-qd_'+question.id+'" class="spq-control-icon spq-delete-icon"><i class="fas fa-trash-alt"></i></span>';
         questionHtml += '</h3>';
-        questionHtml += question.description;
+        questionHtml += '<p data-description="">'+question.description+'</p>';
+        questionHtml += '<p data-hint="">'+question.hint+'</p>';
         questionHtml += '</li>';
 
         jQuery('#spq-preview').append(questionHtml);
@@ -98,8 +105,22 @@ jQuery(document).ready(function() {
 
     // Edit question
     jQuery(document).on('click', '#spq-preview .spq-edit-icon', function() {
-        var id = jQuery(this).attr('id').replace(/[^0-9]/gi, '');
-        editQuestion(parseInt(id));
+        var li = jQuery(this).parent().parent();
+        
+        var question_title = jQuery(li+' .spq-question-title').val();
+        var question_description = jQuery('#spq-question-description').val();
+        var question_type = jQuery(li).data("type");
+        var question_hint = jQuery('#spq-question-hint').val();
+        var question_obligatory = jQuery(li).data("obligatory");
+        
+        var question = {
+            title: question_title,
+            description: question_description,
+            type: question_type,
+            hint: question_hint,
+            obligatory: question_obligatory
+        };
+        console.log(question);
     });
     
     // Delete question
@@ -108,7 +129,7 @@ jQuery(document).ready(function() {
         var lis = jQuery('#spq-preview').children('li');
         lis.each(function() {
             var newVal = jQuery(this).index() + 1;
-            jQuery(this).children().children('.sortable-number').html(newVal);
+            jQuery(this).children().children('.spq-sortable-number').html(newVal);
         });        
         
     });
