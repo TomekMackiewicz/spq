@@ -1,4 +1,8 @@
 jQuery(document).ready(function() {
+
+//------------------------------------------------------------------------------
+// QUIZ FORM
+// -----------------------------------------------------------------------------
     
     // Hide required / regex warning on startup
     jQuery('.spq-required-field').next().hide();
@@ -36,7 +40,15 @@ jQuery(document).ready(function() {
         }
     });
     
-    // Save quiz
+    // Show per page field only if paginate heckbox is checked
+    jQuery('#spq-paginate').click(function() {
+        jQuery("#spq-questions-per-page").toggle(this.checked);
+    });
+    
+//------------------------------------------------------------------------------
+// SAVE QUIZ
+// -----------------------------------------------------------------------------
+
     jQuery('.spq-quiz-form').submit(function(e) {
         e.preventDefault();
         var data = JSON.stringify(jQuery('.spq-quiz-form').serializeArray());

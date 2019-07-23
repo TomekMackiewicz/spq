@@ -65,7 +65,7 @@ add_filter('set-screen-option', 'quiz_table_set_option', 10, 3);
 function spq_shortcode($atts) {
     add_action( 'wp_head', 'append_href' );
     wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js', [], null, true);
-    wp_enqueue_script('spq', plugin_dir_url(__FILE__).'includes/scripts/spq.js', [], null, true);
+    wp_enqueue_script('shortcode', plugin_dir_url(__FILE__).'includes/js/shortcode.js', [], null, true);
     
     $keys = array_keys($atts);
     if (count($keys) !== 1) {
@@ -94,7 +94,7 @@ function add_scripts($hook)
     wp_enqueue_style('spq-styles');    
     wp_register_style('font-awesome', 'https://use.fontawesome.com/releases/v5.6.1/css/all.css');
     wp_enqueue_style('font-awesome');
-    wp_enqueue_script('scripts', plugin_dir_url(__FILE__).'includes/js/scripts.js', [], null, true);
+    wp_enqueue_script('admin', plugin_dir_url(__FILE__).'includes/js/admin.js', [], null, true);
 }
 
 function quiz_plugin_menu() 

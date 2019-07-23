@@ -1,8 +1,3 @@
-<?php
-
-echo 'ok';
-?>
-
 <div class="wrap">
     <h1>New quiz</h1>
     <form name="spq_quiz_form" method="post" action="" class="spq-quiz-form">
@@ -52,11 +47,11 @@ echo 'ok';
                             </div>
                         </div>
                         <div class="spq-input-wrap">
-                            <input name="paginated" type="checkbox">
+                            <input name="paginated" type="checkbox" id="spq-paginate">
                             <label>Paginated?</label>
                         </div>
                         <div class="spq-input-wrap">
-                            <input name="per_page" type="text" class="spq-input spq-regex-integer" placeholder="Questions per page">                                 
+                            <input name="per_page" type="text" id="spq-questions-per-page" class="spq-input spq-regex-integer" placeholder="Questions per page">                                 
                             <div class="invalid-feedback">
                                 <div>Only numbers are allowed</div>
                             </div> 
