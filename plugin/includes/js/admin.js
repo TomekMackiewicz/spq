@@ -46,9 +46,24 @@ jQuery(document).ready(function() {
     jQuery('#spq-paginate').click(function() {
         jQuery("#spq-questions-per-page").toggle(this.checked);
     });
+    
+    // Questions accordion
+    jQuery(function() {
+        jQuery('#spq-preview').accordion();
+        jQuery(document).on('mouseenter', '#spq-preview .spq-control-icon', function() {
+            jQuery(this).addClass('ui-state-hover');
+        });
+        jQuery(document).on('mouseleave', '#spq-preview .spq-control-icon', function() {
+            jQuery(this).removeClass('ui-state-hover');
+        });
+        jQuery(document).on('click', '#spq-preview .spq-control-icon', function() {
+            console.log('Clicked: '+jQuery(this).attr("id"));
+            return false;
+        });
+    });
 
     // Add question
-    jQuery( "#spq-add-question" ).click(function() {
+    jQuery("#spq-add-question").click(function() {
         var question_title = jQuery('#spq-question-title').val();
         var question_description = jQuery('#spq-question-description').val();
         var question_type = jQuery('#spq-question-type').val();
@@ -64,21 +79,17 @@ jQuery(document).ready(function() {
             obligatory: question_obligatory
         };
         
-        var questionHtml = '<h3>'+question.id+') '+question.title;
-        questionHtml += '<span id="spq-qe_'+question.id+'" class="spq-control-icon"><i class="fas fa-cogs"></i></span>';
-        questionHtml += '<span id="spq-qd_'+question.id+'" class="spq-control-icon"><i class="fas fa-trash-alt"></i></span>';
-        questionHtml += '</h3>';
+        var questionHtml = '<h3>'+question.id+') '+question.title+'</h3>';
+        questionHtml += '<div>';
+        questionHtml += '<span id="spq-qe_'+question.id+'" class="spq-control-icon spq-edit-icon"><i class="fas fa-cogs"></i></span>';
+        questionHtml += '<span id="spq-qd_'+question.id+'" class="spq-control-icon spq-delete-icon"><i class="fas fa-trash-alt"></i></span>';
+        questionHtml += question.description;
+        questionHtml += '</div>';
 
         jQuery('#spq-preview').append(questionHtml);
-        jQuery('#spq-preview').append('<div>'+question.description+'</div>');
         jQuery('#spq-preview').accordion('refresh');
         
         questions.push(question);
-        console.log(questions);
-    });
-    
-    jQuery(function() {
-        jQuery("#spq-preview").accordion();
     });
 
 //------------------------------------------------------------------------------
