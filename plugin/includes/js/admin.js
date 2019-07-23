@@ -56,14 +56,20 @@ jQuery(document).ready(function() {
         var question_obligatory = jQuery('#spq-question-obligatory').val();
 
         var question = {
+            id: questions.length+1,
             title: question_title,
             description: question_description,
             type: question_type,
             hint: question_hint,
             obligatory: question_obligatory
         };
+        
+        var questionHtml = '<h3>'+question.id+') '+question.title;
+        questionHtml += '<span id="spq-qe_'+question.id+'" class="spq-control-icon"><i class="fas fa-cogs"></i></span>';
+        questionHtml += '<span id="spq-qd_'+question.id+'" class="spq-control-icon"><i class="fas fa-trash-alt"></i></span>';
+        questionHtml += '</h3>';
 
-        jQuery('#spq-preview').append('<h3>'+question.title+'</h3>');
+        jQuery('#spq-preview').append(questionHtml);
         jQuery('#spq-preview').append('<div>'+question.description+'</div>');
         jQuery('#spq-preview').accordion('refresh');
         
