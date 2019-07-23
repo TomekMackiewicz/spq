@@ -1,6 +1,4 @@
 jQuery(document).ready(function() {
-    
-    var questions = [];
 
 //------------------------------------------------------------------------------
 // QUIZ FORM
@@ -47,19 +45,27 @@ jQuery(document).ready(function() {
         jQuery("#spq-questions-per-page").toggle(this.checked);
     });
     
-    // Questions accordion
+    // Set controls
+    jQuery(document).on('mouseenter', '#spq-preview .spq-control-icon', function() {
+        jQuery(this).addClass('ui-state-hover');
+    });
+    jQuery(document).on('mouseleave', '#spq-preview .spq-control-icon', function() {
+        jQuery(this).removeClass('ui-state-hover');
+    });
+
+    // Make questions list items sortable
     jQuery(function() {
-        jQuery('#spq-preview').accordion();
-        jQuery(document).on('mouseenter', '#spq-preview .spq-control-icon', function() {
-            jQuery(this).addClass('ui-state-hover');
+        jQuery("#spq-preview").sortable({
+            placeholder: "ui-state-highlight",
+            update: function(event, ui) {
+                var lis = jQuery(this).children('li');
+                lis.each(function() {
+                    var newVal = jQuery(this).index() + 1;
+                    jQuery(this).children().children('.sortable-number').html(newVal);
+                });
+            }
         });
-        jQuery(document).on('mouseleave', '#spq-preview .spq-control-icon', function() {
-            jQuery(this).removeClass('ui-state-hover');
-        });
-        jQuery(document).on('click', '#spq-preview .spq-control-icon', function() {
-            console.log('Clicked: '+jQuery(this).attr("id"));
-            return false;
-        });
+        jQuery("#spq-preview").disableSelection();
     });
 
     // Add question
@@ -71,7 +77,7 @@ jQuery(document).ready(function() {
         var question_obligatory = jQuery('#spq-question-obligatory').val();
 
         var question = {
-            id: questions.length+1,
+            id: jQuery("#spq-preview li").length+1,
             title: question_title,
             description: question_description,
             type: question_type,
@@ -79,17 +85,32 @@ jQuery(document).ready(function() {
             obligatory: question_obligatory
         };
         
-        var questionHtml = '<h3>'+question.id+') '+question.title+'</h3>';
-        questionHtml += '<div>';
+        var questionHtml = '<li class="draggable">';
+        questionHtml += '<h3><span class="sortable-number">'+question.id+'</span> '+question.title;
         questionHtml += '<span id="spq-qe_'+question.id+'" class="spq-control-icon spq-edit-icon"><i class="fas fa-cogs"></i></span>';
         questionHtml += '<span id="spq-qd_'+question.id+'" class="spq-control-icon spq-delete-icon"><i class="fas fa-trash-alt"></i></span>';
+        questionHtml += '</h3>';
         questionHtml += question.description;
-        questionHtml += '</div>';
+        questionHtml += '</li>';
 
         jQuery('#spq-preview').append(questionHtml);
-        jQuery('#spq-preview').accordion('refresh');
+    });
+
+    // Edit question
+    jQuery(document).on('click', '#spq-preview .spq-edit-icon', function() {
+        var id = jQuery(this).attr('id').replace(/[^0-9]/gi, '');
+        editQuestion(parseInt(id));
+    });
+    
+    // Delete question
+    jQuery(document).on('click', '#spq-preview .spq-delete-icon', function() {
+        jQuery(this).parent().parent().remove();
+        var lis = jQuery('#spq-preview').children('li');
+        lis.each(function() {
+            var newVal = jQuery(this).index() + 1;
+            jQuery(this).children().children('.sortable-number').html(newVal);
+        });        
         
-        questions.push(question);
     });
 
 //------------------------------------------------------------------------------

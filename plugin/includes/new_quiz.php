@@ -144,7 +144,7 @@
                 <div class="spq-box">
                     <h2>Preview</h2>
                     <div class="spq-inside">
-                        <div id="spq-preview"></div>
+                        <ul id="spq-preview"></ul>
                     </div>
                 </div>
             </div> 
