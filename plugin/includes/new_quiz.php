@@ -98,6 +98,7 @@
                             <input id="spq-question-obligatory" type="checkbox">
                             <label>Obligatory?</label>
                         </div>
+                        <input type="hidden" id="spq-question-id">
                         <button type="button" id="spq-add-question" class="button button-primary">Add question</button>                            
                     </div>
                 </form>
