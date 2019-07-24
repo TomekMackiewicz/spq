@@ -110,6 +110,7 @@ jQuery(document).ready(function() {
         } else {
             jQuery('#spq-preview').append(questionHtml);
         }
+        jQuery('#spq-add-question').text('Add question');
     });
 
     // Prepare question form for edit
@@ -138,6 +139,7 @@ jQuery(document).ready(function() {
         jQuery('#spq-question-type').val(question.type);
         jQuery('#spq-question-hint').val(question.hint);
         jQuery('#spq-question-obligatory').prop('checked', question.obligatory);
+        jQuery('#spq-add-question').text('Edit question');
     });
     
     // Delete question
