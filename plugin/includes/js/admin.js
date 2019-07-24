@@ -105,7 +105,11 @@ jQuery(document).ready(function() {
         questionHtml += '<p class="spq-question-hint">'+question.hint+'</p>';
         questionHtml += '</li>';
 
-        jQuery('#spq-preview').append(questionHtml);
+        if (question_id) {
+            jQuery('#spq-preview [data-id="'+question_id+'"]').replaceWith(questionHtml);
+        } else {
+            jQuery('#spq-preview').append(questionHtml);
+        }
     });
 
     // Prepare question form for edit
