@@ -7,6 +7,7 @@ jQuery(document).ready(function() {
     // Hide required / regex warning on startup
     jQuery('.spq-required-field').next().hide();
     jQuery('.spq-regex-integer').next().hide();
+    jQuery('.spq-quiz-form :submit').attr('disabled', true);
 
     // Confirm delete
     jQuery('.delete').click(function(event) {
@@ -15,18 +16,15 @@ jQuery(document).ready(function() {
         }
     });
     
-    // Activate save button on form change
-    jQuery('.spq-quiz-form').on('input change', function() {
-        jQuery('.spq-quiz-form :submit').attr('disabled', false);
-    });
-    
     // Toogle required warning
     jQuery('.spq-required-field').on('input', function() {
         var input = jQuery(this);
         if (input.val()) {
             input.next().hide();
-        } else{
+            jQuery('.spq-quiz-form :submit').attr('disabled', false);
+        } else {
             input.next().show();
+            jQuery('.spq-quiz-form :submit').attr('disabled', true);
         }
     });
 
@@ -35,8 +33,10 @@ jQuery(document).ready(function() {
         var input = jQuery(this);
         if (input.val().match(/[^0-9]/g, '')) {
             input.next().show();
-        } else{
+            jQuery('.spq-quiz-form :submit').attr('disabled', true);
+        } else {
             input.next().hide();
+            jQuery('.spq-quiz-form :submit').attr('disabled', false);
         }
     });
     
