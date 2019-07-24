@@ -1,11 +1,11 @@
 <div class="wrap">
     <h1>New quiz</h1>
-    <form name="spq_quiz_form" method="post" action="" class="spq-quiz-form">
-        <p class="submit spq-form-submit">
-            <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" disabled />
-        </p>
-        <div id="spq-box-wrap">
-            <div class="spq-box-container-3">
+    <div id="spq-box-wrap">
+        <div class="spq-box-container-3">
+            <form name="spq_quiz_form" method="post" action="" class="spq-quiz-form">
+                <p class="submit spq-form-submit">
+                    <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" disabled />
+                </p>
                 <div class="spq-box">
                     <h2>Basic info</h2>
                     <div class="spq-inside">
@@ -66,10 +66,12 @@
                         </div>                        
                     </div>                    
                 </div>
-            </div>
-            <div class="spq-box-container-3">
-                <div class="spq-box">
-                    <h2>New question</h2>
+            </form>
+        </div>
+        <div class="spq-box-container-3">
+            <div class="spq-box">
+                <h2>New question</h2>
+                <form name="spq_question_form" method="post" action="" class="spq-question-form">
                     <div id="spq-question-form" class="spq-inside">
                         <div class="spq-input-wrap">
                           <input id="spq-question-title" type="text" class="spq-input spq-required-field" placeholder="Enter title" required>
@@ -98,58 +100,58 @@
                         </div>
                         <button type="button" id="spq-add-question" class="button button-primary">Add question</button>                            
                     </div>
-                </div> 
-<!--                <div class="spq-box">
-                    <h2>Answers</h2>
-                    <div class="spq-inside">
-                        <button type="button" class="button button-primary">Add answer</button>
-                        <ul class="spq-list-group">
-                            <li>
-                                <i class="fas fa-chevron-down spq-control-icon">
-                                </i>
-                                <i class="fas fa-trash-alt spq-control-icon"></i>
-                                <ng-template>
-                                  <i class="fas fa-chevron-up spq-control-icon">
-                                  </i>
-                                </ng-template>
-                                <div class="spq-collapse">               
-                                    <div>
-                                        <div class="spq-input-wrap">
-                                            <input type="text" class="spq-input" placeholder="Answer" required>
-                                            <div>
-                                                <div>Title is required</div>
-                                            </div>            
-                                        </div>
-                                        <div class="spq-input-wrap">
-                                            <input type="checkbox">
-                                            <label>Correct answer</label>
-                                        </div>     
-                                        <div class="spq-input-wrap">
-                                            <textarea class="spq-textarea" placeholder="Message"></textarea>
-                                        </div>
-                                          <div class="spq-input-wrap">
-                                            <input type="text" class="spq-input" placeholder="Points">
-                                            <div>
-                                                <div>Only numbers are allowed</div>
-                                            </div>               
-                                          </div>                                                  
-                                    </div>                                   
-                                </div>
-                            </li>
-                        </ul>      
-                    </div>
-                </div>-->
-            </div>
-            <div class="spq-box-container-6">
-                <div class="spq-box">
-                    <h2>Preview</h2>
-                    <div class="spq-inside">
-                        <ul id="spq-preview"></ul>
-                    </div>
-                </div>
+                </form>
             </div> 
+<!--                <div class="spq-box">
+                <h2>Answers</h2>
+                <div class="spq-inside">
+                    <button type="button" class="button button-primary">Add answer</button>
+                    <ul class="spq-list-group">
+                        <li>
+                            <i class="fas fa-chevron-down spq-control-icon">
+                            </i>
+                            <i class="fas fa-trash-alt spq-control-icon"></i>
+                            <ng-template>
+                              <i class="fas fa-chevron-up spq-control-icon">
+                              </i>
+                            </ng-template>
+                            <div class="spq-collapse">               
+                                <div>
+                                    <div class="spq-input-wrap">
+                                        <input type="text" class="spq-input" placeholder="Answer" required>
+                                        <div>
+                                            <div>Title is required</div>
+                                        </div>            
+                                    </div>
+                                    <div class="spq-input-wrap">
+                                        <input type="checkbox">
+                                        <label>Correct answer</label>
+                                    </div>     
+                                    <div class="spq-input-wrap">
+                                        <textarea class="spq-textarea" placeholder="Message"></textarea>
+                                    </div>
+                                      <div class="spq-input-wrap">
+                                        <input type="text" class="spq-input" placeholder="Points">
+                                        <div>
+                                            <div>Only numbers are allowed</div>
+                                        </div>               
+                                      </div>                                                  
+                                </div>                                   
+                            </div>
+                        </li>
+                    </ul>      
+                </div>
+            </div>-->
         </div>
-    </form>
+        <div class="spq-box-container-6">
+            <div class="spq-box">
+                <h2>Preview</h2>
+                <div class="spq-inside">
+                    <ul id="spq-preview"></ul>
+                </div>
+            </div>
+        </div> 
+    </div>
 </div>
 
 <!--            <div class="spq-box-container-3">

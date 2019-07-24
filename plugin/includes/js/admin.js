@@ -74,13 +74,13 @@ jQuery(document).ready(function() {
         var question_description = jQuery('#spq-question-description').val();
         var question_type = jQuery('#spq-question-type').val();
         var question_hint = jQuery('#spq-question-hint').val();
-        var question_obligatory = jQuery('#spq-question-obligatory').val();
+        var question_obligatory = document.getElementById('spq-question-obligatory').checked;
         
         jQuery('#spq-question-title').val('');
         jQuery('#spq-question-description').val('');
         jQuery('#spq-question-type').val('');
         jQuery('#spq-question-hint').val('');
-        jQuery('#spq-question-obligatory').val('');
+        jQuery('#spq-question-obligatory').prop('checked', false);
 
         var question = {
             id: jQuery("#spq-preview li").length+1,
@@ -96,8 +96,8 @@ jQuery(document).ready(function() {
         questionHtml += '<span id="spq-qe_'+question.id+'" class="spq-control-icon spq-edit-icon"><i class="fas fa-cogs"></i></span>';
         questionHtml += '<span id="spq-qd_'+question.id+'" class="spq-control-icon spq-delete-icon"><i class="fas fa-trash-alt"></i></span>';
         questionHtml += '</h3>';
-        questionHtml += '<p data-description="">'+question.description+'</p>';
-        questionHtml += '<p data-hint="">'+question.hint+'</p>';
+        questionHtml += '<p class="spq-question-description">'+question.description+'</p>';
+        questionHtml += '<p class="spq-question-hint">'+question.hint+'</p>';
         questionHtml += '</li>';
 
         jQuery('#spq-preview').append(questionHtml);
@@ -106,11 +106,11 @@ jQuery(document).ready(function() {
     // Edit question
     jQuery(document).on('click', '#spq-preview .spq-edit-icon', function() {
         var li = jQuery(this).parent().parent();
-        
-        var question_title = jQuery(li+' .spq-question-title').val();
-        var question_description = jQuery('#spq-question-description').val();
+
+        var question_title = li.find('.spq-question-title').text();
+        var question_description = li.find('.spq-question-description').text();
         var question_type = jQuery(li).data("type");
-        var question_hint = jQuery('#spq-question-hint').val();
+        var question_hint = li.find('.spq-question-hint').text();
         var question_obligatory = jQuery(li).data("obligatory");
         
         var question = {
@@ -120,7 +120,12 @@ jQuery(document).ready(function() {
             hint: question_hint,
             obligatory: question_obligatory
         };
-        console.log(question);
+
+        jQuery('#spq-question-title').val(question.title);
+        jQuery('#spq-question-description').val(question.description);
+        jQuery('#spq-question-type').val(question.type);
+        jQuery('#spq-question-hint').val(question.hint);
+        jQuery('#spq-question-obligatory').prop('checked', question.obligatory);
     });
     
     // Delete question
